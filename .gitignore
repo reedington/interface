@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.local/
+.env
+.env.*
+!.env.example
+tmp/
+.DS_Store
+*.log
+
+# Private working notes and supplied assessment/reference files
+.remember/
+.codex/
+.agents/
+/Assignment*.pdf
+/*.HEIC

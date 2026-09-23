@@ -1,0 +1,26 @@
+# Local Mifos target provenance
+
+This profile runs the **Mifos X web app, backed by Apache Fineract**, independently of Interface. It is for synthetic local testing. It does not connect to a financial institution, public demonstration server, AWS, or a hosted desktop.
+
+The UI release [`v1.0.0-fineract1.11`](https://github.com/openMF/web-app/releases/tag/v1.0.0-fineract1.11) declares its Fineract compatibility in the release tag. We use Mifos-published `openmf/web-app:1.11` and `openmf/fineract:1.11.0`, pinned to the public registry digests recorded in `versions.json` on September 23, 2026. The image-to-source relationship is publisher tagging, not a locally reproduced build or verified source attestation. These versions deliberately remain stable so recorded UI contracts do not drift with `dev` or `latest` tags.
+
+PostgreSQL 16.1 is the database version in [Apache Fineract 1.11.0's Compose configuration](https://github.com/apache/fineract/blob/1.11.0/config/docker/compose/postgresql.yml). The local configuration uses the release's documented PostgreSQL connection and tenant environment variables. It uses one in-process scheduler, so no separate message broker is required. This profile is not a production security baseline; upgrading older dependencies requires rerunning the UI qualification and browser tests.
+
+The frontend image is published for amd64 only; Docker Desktop must support amd64 emulation on Apple Silicon. PostgreSQL and Fineract select native arm64 images on Apple Silicon. macOS uses Docker Desktop's shared Linux runtime: these are three local application containers, not a paid cloud computer or one VM for each browser session. Windows uses Docker Desktop Linux containers/WSL2; the portable setup script is included, but Windows qualification remains separate.
+
+Only `127.0.0.1:4200` is published by default. The web server proxies Fineract on the same origin, and the database has no host port. This profile provisions only the `default` tenant and rejects a different `MIFOS_TENANT`. The upstream initial login is `mifos` / `password`; database/master passwords in this folder are intentionally public, local-only test credentials. Never put real member data into this profile or expose its port on a network. Named database storage persists across `down` and `up`; no command silently removes it.
+
+Expected initial compressed image downloads total approximately 0.6 GiB, with additional unpacked images, Docker storage, database migrations, logs, Node dependencies, and free-space headroom required. Initial setup requires at least 8 GiB free on the project filesystem; when all pinned images are already cached, repeated setup requires 2 GiB of operating headroom instead. Docker needs at least 4 GiB of assigned memory; 16 GiB host RAM and 8 GiB assigned to Docker are recommended. These are project preflight budgets, not measured performance guarantees. Docker's own disk location may be elsewhere and must also have adequate space.
+
+Readiness means both the Mifos index and an authenticated Fineract clients request succeed. A running container or open TCP socket alone does not count. First initialization may take several minutes. `node scripts/mifos-stack.mjs logs` shows the last 100 lines; `down` stops this Compose project while retaining the database.
+
+Actual local qualification on September 23, 2026: these three pinned images were pulled and started on macOS Apple Silicon with Docker Desktop; PostgreSQL initialized the persistent volume, Fineract completed both tenant migrations, all three containers became healthy, and the UI plus authenticated clients API returned HTTP 200. A second `up` verified reuse of the running stack. The published UI image contains Debian nginx 1.27.3 and `curl`, which differs from the source tag's Dockerfile base-image declaration; its health check was qualified against that published image. Its string-valued environment template requires an empty OAuth flag to select basic login; the string `false` incorrectly selects OAuth. Fineract's public actuator metadata identifies clean source commit `843b27926e516420297f40655fa734277195d773`, tagged `1.11.0`, while reporting build label `1.12.0-SNAPSHOT`; both observations are preserved in `versions.json`. UI workflow verification and seed fixtures are recorded separately in the project's validation documentation.
+
+Licenses and trademarks remain with their respective owners:
+
+- [Mifos X web app license](https://github.com/openMF/web-app/blob/v1.0.0-fineract1.11/LICENSE), Mozilla Public License 2.0.
+- [Apache Fineract release license](https://github.com/apache/fineract/blob/1.11.0/LICENSE_RELEASE), Apache License 2.0 with dependency notices, and its [NOTICE](https://github.com/apache/fineract/blob/1.11.0/NOTICE_RELEASE).
+- [PostgreSQL license](https://www.postgresql.org/about/licence/).
+- Compose environment names were checked against [Fineract 1.11.0 application.properties](https://github.com/apache/fineract/blob/1.11.0/fineract-provider/src/main/resources/application.properties) and [Mifos's release environment template](https://github.com/openMF/web-app/blob/v1.0.0-fineract1.11/src/assets/env.template.js).
+
+No upstream source or image is vendored here; Docker retrieves the pinned published images on setup. The small initialization SQL and nginx configuration are local integration code.

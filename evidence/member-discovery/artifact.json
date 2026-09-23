@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "id": "discovered-5449e1b6",
+  "version": "1.1.0",
+  "name": "Discovered member workflow",
+  "description": "Recorded from a live model-guided session. Validate with deterministic replay before approving.",
+  "task": "member",
+  "target": "mifos-x",
+  "inputs": "banking-inputs-v1",
+  "output": "member-v1",
+  "steps": [
+    {
+      "id": "open",
+      "label": "Open the banking application",
+      "action": "navigate",
+      "path": "/#/clients",
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-1",
+      "label": "Enter the requested clientReference",
+      "action": "fill",
+      "target": {
+        "kind": "css",
+        "value": "input[placeholder=\"Search by client name, external Id, mobile\"]",
+        "exact": true
+      },
+      "value": {
+        "source": "input",
+        "key": "clientReference"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "discovered-step-2",
+      "label": "press the observed textbox",
+      "action": "press",
+      "target": {
+        "kind": "css",
+        "value": "input[placeholder=\"Search by client name, external Id, mobile\"]",
+        "exact": true
+      },
+      "value": {
+        "source": "literal",
+        "value": "Enter"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "verify-member-absent",
+      "label": "Verify the new member reference is unused",
+      "action": "checkpoint",
+      "checkpoint": "member_absent",
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-4",
+      "label": "click Create Client",
+      "action": "click",
+      "target": {
+        "kind": "role",
+        "value": "Create Client",
+        "role": "button",
+        "exact": true
+      },
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-5",
+      "label": "click the observed combobox",
+      "action": "click",
+      "target": {
+        "kind": "css",
+        "value": "mat-select[formcontrolname=\"officeId\"]",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-6",
+      "label": "click Head Office",
+      "action": "click",
+      "target": {
+        "kind": "role",
+        "value": "Head Office",
+        "role": "option",
+        "exact": true
+      },
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-7",
+      "label": "Enter the requested clientReference",
+      "action": "fill",
+      "target": {
+        "kind": "css",
+        "value": "input[formcontrolname=\"externalId\"]",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "value": {
+        "source": "input",
+        "key": "clientReference"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "discovered-step-8",
+      "label": "Enter the requested firstName",
+      "action": "fill",
+      "target": {
+        "kind": "css",
+        "value": "input[formcontrolname=\"firstname\"]",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "value": {
+        "source": "input",
+        "key": "firstName"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "discovered-step-9",
+      "label": "Enter the requested lastName",
+      "action": "fill",
+      "target": {
+        "kind": "css",
+        "value": "input[formcontrolname=\"lastname\"]",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "value": {
+        "source": "input",
+        "key": "lastName"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "discovered-step-10",
+      "label": "Enter the requested memberActivationDate",
+      "action": "fill",
+      "target": {
+        "kind": "css",
+        "value": "input[formcontrolname=\"submittedOnDate\"]",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "value": {
+        "source": "input",
+        "key": "memberActivationDate"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "discovered-step-11",
+      "label": "click the observed checkbox",
+      "action": "click",
+      "target": {
+        "kind": "css",
+        "value": "mat-checkbox[formcontrolname=\"active\"] label",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-12",
+      "label": "Enter the requested memberActivationDate",
+      "action": "fill",
+      "target": {
+        "kind": "css",
+        "value": "input[formcontrolname=\"activationDate\"]",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "value": {
+        "source": "input",
+        "key": "memberActivationDate"
+      },
+      "effect": "form"
+    },
+    {
+      "id": "discovered-step-13",
+      "label": "click Next",
+      "action": "click",
+      "target": {
+        "kind": "role",
+        "value": "Next",
+        "role": "button",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-general-step:visible"
+      },
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-14",
+      "label": "click Next",
+      "action": "click",
+      "target": {
+        "kind": "role",
+        "value": "Next",
+        "role": "button",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-family-members-step:visible"
+      },
+      "effect": "read"
+    },
+    {
+      "id": "verify-preview",
+      "label": "Verify new member preview",
+      "action": "checkpoint",
+      "checkpoint": "member_preview",
+      "effect": "read"
+    },
+    {
+      "id": "discovered-step-15",
+      "label": "Submit the reviewed details",
+      "action": "click",
+      "target": {
+        "kind": "role",
+        "value": "Submit",
+        "role": "button",
+        "exact": true,
+        "scope": ".mat-horizontal-stepper-content:not(.mat-horizontal-stepper-content-inactive) mifosx-client-preview-step:visible"
+      },
+      "effect": "commit"
+    },
+    {
+      "id": "verify-member_created",
+      "label": "Verify member_created",
+      "action": "checkpoint",
+      "checkpoint": "member_created",
+      "effect": "read"
+    }
+  ],
+  "provenance": {
+    "kind": "discovered",
+    "runId": "5449e1b6-4b9f-4794-9391-56a97e0944b2",
+    "provider": "openai",
+    "model": "gpt-4.1"
+  },
+  "digest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a"
+}

@@ -1,0 +1,106 @@
+{
+  "task": "member",
+  "description": "Create an active individual member in Head Office with a new external reference and explicit first/last name. Resolve the visible business date when omitted, require exact-preview approval, and return the generated member number. No savings account is created.",
+  "inputContractId": "banking-inputs-v1",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "member inputs",
+    "type": "object",
+    "properties": {
+      "clientReference": {
+        "type": "string",
+        "pattern": "^[0-9]{4,12}$",
+        "description": "Unique member external reference; never assume this is the target-generated member account number."
+      },
+      "firstName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50,
+        "pattern": "^[\\p{L}\\p{M}][\\p{L}\\p{M} .'-]*$",
+        "description": "First name; surrounding/repeated ASCII spaces are normalized by the runtime."
+      },
+      "lastName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50,
+        "pattern": "^[\\p{L}\\p{M}][\\p{L}\\p{M} .'-]*$",
+        "description": "Last name; surrounding/repeated ASCII spaces are normalized by the runtime."
+      },
+      "memberActivationDate": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "description": "Optional explicit US M/D/YYYY or D Month YYYY date. If omitted, resolve the current visible business date before approval."
+      }
+    },
+    "required": [
+      "clientReference",
+      "firstName",
+      "lastName"
+    ],
+    "additionalProperties": true
+  },
+  "outputContractId": "member-v1",
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "member-v1",
+    "type": "object",
+    "properties": {
+      "clientReference": {
+        "type": "string",
+        "pattern": "^[0-9]{4,12}$",
+        "description": "Unique member external reference; never assume this is the target-generated member account number."
+      },
+      "memberAccountNumber": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9-]{1,32}$",
+        "description": "Target-generated member account number, not the supplied external reference."
+      },
+      "firstName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50,
+        "pattern": "^[\\p{L}\\p{M}][\\p{L}\\p{M} .'-]*$",
+        "description": "First name; surrounding/repeated ASCII spaces are normalized by the runtime."
+      },
+      "lastName": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 50,
+        "pattern": "^[\\p{L}\\p{M}][\\p{L}\\p{M} .'-]*$",
+        "description": "Last name; surrounding/repeated ASCII spaces are normalized by the runtime."
+      },
+      "memberName": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 101,
+        "description": "Visible full name; must match firstName plus lastName."
+      },
+      "office": {
+        "type": "string",
+        "const": "Head Office"
+      },
+      "activationDate": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40,
+        "description": "Visible D Month YYYY activation date; must equal the requested or UI-resolved date."
+      },
+      "status": {
+        "type": "string",
+        "const": "Active"
+      }
+    },
+    "required": [
+      "clientReference",
+      "memberAccountNumber",
+      "firstName",
+      "lastName",
+      "memberName",
+      "office",
+      "status",
+      "activationDate"
+    ],
+    "additionalProperties": false
+  }
+}

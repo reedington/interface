@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "exportedAt": "2026-09-23T10:17:52.471Z",
+  "target": "mifos-x",
+  "task": "member",
+  "artifactId": "discovered-5449e1b6",
+  "artifactDigest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a",
+  "artifactStatus": "draft",
+  "discoveryRunId": "5449e1b6-4b9f-4794-9391-56a97e0944b2",
+  "replayRunId": "6854fc88-e210-427b-9789-3fd7bf2f6dc3",
+  "failureRunId": "fcb5581e-8204-46ab-9a44-2fc85d0d7af1",
+  "provider": "openai",
+  "model": "gpt-4.1",
+  "discoveryModelCalls": 14,
+  "replayModelCalls": 0,
+  "qualification": {
+    "eligible": true,
+    "reasons": [],
+    "digestVerified": true,
+    "discoveryRunId": "5449e1b6-4b9f-4794-9391-56a97e0944b2",
+    "replayRunIds": [
+      "6854fc88-e210-427b-9789-3fd7bf2f6dc3"
+    ],
+    "successfulReplays": 1,
+    "totalReplays": 1,
+    "distinctMemberCount": 2,
+    "testedProducts": []
+  },
+  "evidencePolicy": "Explicit fictional fixtures; allowlisted redacted audit logs; unchanged capability core/digest; no raw screenshots, goals, approval tokens or provider bodies.",
+  "limits": [
+    "Successful local case evidence, not a multi-run reliability benchmark.",
+    "A qualified draft is not automatically approved for unattended use.",
+    "No business action, provider request or history recovery is performed by this export."
+  ]
+}

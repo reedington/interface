@@ -1,0 +1,45 @@
+{
+  "dataClassification": "fictional-test-data-only",
+  "discovery": {
+    "runId": "5449e1b6-4b9f-4794-9391-56a97e0944b2",
+    "inputs": {
+      "clientReference": "683374165011",
+      "firstName": "Jordan",
+      "lastName": "Ellis"
+    },
+    "resolvedInputs": {
+      "memberActivationDate": "9/23/2026"
+    },
+    "output": {
+      "clientReference": "683374165011",
+      "memberAccountNumber": "000000003",
+      "firstName": "Jordan",
+      "lastName": "Ellis",
+      "memberName": "Jordan Ellis",
+      "office": "Head Office",
+      "status": "Active",
+      "activationDate": "23 September 2026"
+    }
+  },
+  "replay": {
+    "runId": "6854fc88-e210-427b-9789-3fd7bf2f6dc3",
+    "inputs": {
+      "clientReference": "946306641681",
+      "firstName": "Casey",
+      "lastName": "Morgan"
+    },
+    "resolvedInputs": {
+      "memberActivationDate": "9/23/2026"
+    },
+    "output": {
+      "clientReference": "946306641681",
+      "memberAccountNumber": "000000004",
+      "firstName": "Casey",
+      "lastName": "Morgan",
+      "memberName": "Casey Morgan",
+      "office": "Head Office",
+      "status": "Active",
+      "activationDate": "23 September 2026"
+    }
+  }
+}

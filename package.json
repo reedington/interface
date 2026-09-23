@@ -1,0 +1,52 @@
+{
+  "name": "interface-workbench",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "description": "Local computer-use discovery, deterministic replay, and live human control",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "dev": "node scripts/start.mjs",
+    "start": "node scripts/start.mjs",
+    "start:web": "node scripts/start.mjs --web",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:e2e": "node --import tsx tests/e2e.ts",
+    "doctor": "node scripts/doctor.mjs",
+    "setup": "node scripts/setup.mjs",
+    "start:lab": "node scripts/start.mjs --lab",
+    "mifos:up": "node scripts/mifos-stack.mjs up",
+    "mifos:down": "node scripts/mifos-stack.mjs down",
+    "mifos:status": "node scripts/mifos-stack.mjs status",
+    "mifos:logs": "node scripts/mifos-stack.mjs logs",
+    "mifos:seed": "node scripts/mifos-seed.mjs",
+    "test:mifos": "node --import tsx tests/mifos-e2e.ts",
+    "test:member": "node --import tsx tests/member-e2e.ts",
+    "test:member:discovery": "node --import tsx tests/member-discovery.ts",
+    "export:evidence": "node --import tsx scripts/export-evidence.ts",
+    "test:setup:fresh": "node scripts/qualify-fresh-setup.mjs",
+    "test:mifos:recovery": "node --import tsx tests/mifos-recovery-e2e.ts"
+  },
+  "dependencies": {
+    "@fastify/static": "^10.1.4",
+    "fastify": "^5.6.0",
+    "lucide-react": "^0.468.0",
+    "playwright-core": "^1.55.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "electron": "^44.4.4",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vite": "^6.3.0"
+  }
+}

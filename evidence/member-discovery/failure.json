@@ -1,0 +1,310 @@
+{
+  "id": "fcb5581e-8204-46ab-9a44-2fc85d0d7af1",
+  "targetId": "mifos-x",
+  "mode": "replay",
+  "task": "member",
+  "goal": "[redacted]",
+  "capabilityId": "discovered-5449e1b6",
+  "capabilityDigest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a",
+  "status": "completed",
+  "result": "business_outcome",
+  "outcomeCode": "MEMBER_REFERENCE_EXISTS",
+  "effect": "none",
+  "inputs": {
+    "clientReference": "[redacted]",
+    "accountReference": "[redacted]",
+    "product": "Everyday Savings",
+    "externalReference": "[redacted]",
+    "firstName": "[redacted]",
+    "lastName": "[redacted]"
+  },
+  "output": {
+    "status": "[redacted]"
+  },
+  "createdAt": "2026-09-23T10:16:00.080Z",
+  "updatedAt": "2026-09-23T10:16:02.187Z",
+  "finishedAt": "2026-09-23T10:16:02.186Z",
+  "owner": "none",
+  "epoch": 2,
+  "sessionId": "9f6cf89b-349c-43f1-afec-b4700ba49425",
+  "stepIndex": 3,
+  "modelCalls": 0,
+  "steps": [
+    {
+      "id": "open",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-1",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-2",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "verify-member-absent",
+      "state": "running",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-4",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-5",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-6",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-7",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-8",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-9",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-10",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-11",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-12",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-13",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-14",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "verify-preview",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-15",
+      "state": "pending",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "verify-member_created",
+      "state": "pending",
+      "label": "[recorded step]"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "timestamp": "2026-09-23T10:16:00.081Z",
+      "kind": "created",
+      "actor": "system",
+      "message": "A run was requested."
+    },
+    {
+      "id": 2,
+      "timestamp": "2026-09-23T10:16:00.767Z",
+      "kind": "policy",
+      "actor": "system",
+      "message": "The worker blocked an action outside its policy."
+    },
+    {
+      "id": 3,
+      "timestamp": "2026-09-23T10:16:01.349Z",
+      "kind": "policy",
+      "actor": "system",
+      "message": "The worker blocked an action outside its policy."
+    },
+    {
+      "id": 4,
+      "timestamp": "2026-09-23T10:16:01.959Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 5,
+      "timestamp": "2026-09-23T10:16:02.040Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 6,
+      "timestamp": "2026-09-23T10:16:02.129Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 7,
+      "timestamp": "2026-09-23T10:16:02.187Z",
+      "kind": "finished",
+      "actor": "system",
+      "message": "Finished with the recorded outcome code."
+    }
+  ],
+  "error": "[redacted; inspect outcomeCode and failing step]",
+  "evidencePolicy": "audit-v1: identifiers, names, goal, raw errors, free-form text and approval tokens omitted",
+  "artifactFile": "artifact.json",
+  "artifactDigest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a",
+  "executedSteps": [
+    {
+      "id": "open",
+      "state": "verified",
+      "action": "navigate",
+      "effect": "read",
+      "purpose": "Open the banking application"
+    },
+    {
+      "id": "discovered-step-1",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested clientReference"
+    },
+    {
+      "id": "discovered-step-2",
+      "state": "verified",
+      "action": "press",
+      "effect": "form",
+      "purpose": "press the observed textbox"
+    },
+    {
+      "id": "verify-member-absent",
+      "state": "running",
+      "action": "checkpoint",
+      "effect": "read",
+      "purpose": "Verify the new member reference is unused",
+      "checkpoint": "member_absent"
+    },
+    {
+      "id": "discovered-step-4",
+      "state": "pending",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Create Client"
+    },
+    {
+      "id": "discovered-step-5",
+      "state": "pending",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click the observed combobox"
+    },
+    {
+      "id": "discovered-step-6",
+      "state": "pending",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Head Office"
+    },
+    {
+      "id": "discovered-step-7",
+      "state": "pending",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested clientReference"
+    },
+    {
+      "id": "discovered-step-8",
+      "state": "pending",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested firstName"
+    },
+    {
+      "id": "discovered-step-9",
+      "state": "pending",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested lastName"
+    },
+    {
+      "id": "discovered-step-10",
+      "state": "pending",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested memberActivationDate"
+    },
+    {
+      "id": "discovered-step-11",
+      "state": "pending",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click the observed checkbox"
+    },
+    {
+      "id": "discovered-step-12",
+      "state": "pending",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested memberActivationDate"
+    },
+    {
+      "id": "discovered-step-13",
+      "state": "pending",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Next"
+    },
+    {
+      "id": "discovered-step-14",
+      "state": "pending",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Next"
+    },
+    {
+      "id": "verify-preview",
+      "state": "pending",
+      "action": "checkpoint",
+      "effect": "read",
+      "purpose": "Verify new member preview",
+      "checkpoint": "member_preview"
+    },
+    {
+      "id": "discovered-step-15",
+      "state": "pending",
+      "action": "click",
+      "effect": "commit",
+      "purpose": "Submit the reviewed details"
+    },
+    {
+      "id": "verify-member_created",
+      "state": "pending",
+      "action": "checkpoint",
+      "effect": "read",
+      "purpose": "Verify member_created",
+      "checkpoint": "member_created"
+    }
+  ]
+}

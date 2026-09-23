@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "qualification": "Fresh source checkout and isolated empty Mifos database",
+  "status": "passed",
+  "startedAt": "2026-09-23T10:03:35.367Z",
+  "completedAt": "2026-09-23T10:05:34.966Z",
+  "target": "Mifos X web app backed by Apache Fineract, using synthetic US fixtures",
+  "testedPlatform": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "node": "25.2.1",
+    "docker": "local Linux arm64 engine",
+    "hostMemoryGiB": 24
+  },
+  "sourceSnapshot": {
+    "sha256": "5826bb837bcd0390c6002c336da2d66b25e3ea74fdeb18964e7d1896766fb819",
+    "digestDefinition": "SHA-256 of JSON.stringify(files), where files is the ordered array in fresh-setup-source-files.json",
+    "files": 73,
+    "manifest": "fresh-setup-source-files.json",
+    "lockfileSha256": "c237356bdd1365b24284da362e74d1695160533a9972643d56b140c5fbbae3da",
+    "scope": "Exact copied source at qualification start; later working-tree changes are not covered by this result."
+  },
+  "isolation": {
+    "composeProject": "interface-assessment-1790157815367",
+    "origin": "http://127.0.0.1:4201",
+    "workbenchPort": 14317,
+    "initialProjectResources": {
+      "container": [],
+      "volume": [],
+      "network": []
+    },
+    "cleanSourceVerified": true,
+    "privateEnvironmentAndStateCopied": false,
+    "providerKeysCopied": false,
+    "originalStackTargeted": false,
+    "resourcesRetainedForFurtherTests": true
+  },
+  "commands": [
+    {
+      "name": "npm-ci",
+      "exitCode": 0,
+      "durationMs": 4327
+    },
+    {
+      "name": "typecheck",
+      "exitCode": 0,
+      "durationMs": 3134
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "durationMs": 3406
+    },
+    {
+      "name": "setup-first",
+      "exitCode": 0,
+      "durationMs": 103983
+    },
+    {
+      "name": "setup-repeat",
+      "exitCode": 0,
+      "durationMs": 3523
+    },
+    {
+      "name": "stack-status",
+      "exitCode": 0,
+      "durationMs": 223
+    }
+  ],
+  "databaseBeforeSeed": {
+    "members": 0,
+    "savingsAccounts": 0,
+    "savingsProducts": 0
+  },
+  "firstSetup": {
+    "apiWrites": 12,
+    "members": 2,
+    "savingsAccounts": 2,
+    "savingsProducts": 2,
+    "accounts": [
+      {
+        "reference": "SAV-1001",
+        "currency": "USD",
+        "balance": "12540.75",
+        "depositCount": 1
+      },
+      {
+        "reference": "SAV-1002",
+        "currency": "USD",
+        "balance": "840.00",
+        "depositCount": 1
+      }
+    ]
+  },
+  "repeatedSetup": {
+    "apiWrites": 0,
+    "recordsUnchanged": true,
+    "manifestUnchanged": true
+  },
+  "limitations": [
+    "Node, Chrome and Docker were already installed; their installation was not qualified.",
+    "Existing npm, Electron and Docker image caches were reused. This was not a cold-download test.",
+    "The harness verified install, typecheck, build, setup and authenticated stack readiness; workflow tests are recorded separately.",
+    "Windows execution remains unverified."
+  ]
+}

@@ -1,0 +1,476 @@
+{
+  "id": "6854fc88-e210-427b-9789-3fd7bf2f6dc3",
+  "targetId": "mifos-x",
+  "mode": "replay",
+  "task": "member",
+  "goal": "[redacted]",
+  "capabilityId": "discovered-5449e1b6",
+  "capabilityDigest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a",
+  "status": "completed",
+  "result": "succeeded",
+  "outcomeCode": "VERIFIED",
+  "effect": "verified",
+  "inputs": {
+    "clientReference": "[redacted]",
+    "accountReference": "[redacted]",
+    "product": "Everyday Savings",
+    "externalReference": "[redacted]",
+    "firstName": "[redacted]",
+    "lastName": "[redacted]"
+  },
+  "resolvedInputs": {
+    "memberActivationDate": "[redacted]"
+  },
+  "output": {
+    "clientReference": "[redacted]",
+    "memberAccountNumber": "[redacted]",
+    "firstName": "[redacted]",
+    "lastName": "[redacted]",
+    "memberName": "[redacted]",
+    "office": "Head Office",
+    "status": "Active",
+    "activationDate": "[redacted]"
+  },
+  "createdAt": "2026-09-23T10:11:34.167Z",
+  "updatedAt": "2026-09-23T10:11:37.354Z",
+  "finishedAt": "2026-09-23T10:11:37.353Z",
+  "owner": "none",
+  "epoch": 4,
+  "sessionId": "dd353b99-3d09-46ae-a919-c7aae974def7",
+  "stepIndex": 18,
+  "modelCalls": 0,
+  "steps": [
+    {
+      "id": "open",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-1",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-2",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "verify-member-absent",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-4",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-5",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-6",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-7",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-8",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-9",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-10",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-11",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-12",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-13",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-14",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "verify-preview",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-15",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "verify-member_created",
+      "state": "verified",
+      "label": "[recorded step]"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "timestamp": "2026-09-23T10:11:34.168Z",
+      "kind": "created",
+      "actor": "system",
+      "message": "A run was requested."
+    },
+    {
+      "id": 2,
+      "timestamp": "2026-09-23T10:11:34.349Z",
+      "kind": "policy",
+      "actor": "system",
+      "message": "The worker blocked an action outside its policy."
+    },
+    {
+      "id": 3,
+      "timestamp": "2026-09-23T10:11:34.913Z",
+      "kind": "policy",
+      "actor": "system",
+      "message": "The worker blocked an action outside its policy."
+    },
+    {
+      "id": 4,
+      "timestamp": "2026-09-23T10:11:35.487Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 5,
+      "timestamp": "2026-09-23T10:11:35.532Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 6,
+      "timestamp": "2026-09-23T10:11:35.614Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 7,
+      "timestamp": "2026-09-23T10:11:35.662Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 8,
+      "timestamp": "2026-09-23T10:11:35.800Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 9,
+      "timestamp": "2026-09-23T10:11:35.860Z",
+      "kind": "input_resolved",
+      "actor": "system",
+      "message": "Resolved missing fields from the visible target."
+    },
+    {
+      "id": 10,
+      "timestamp": "2026-09-23T10:11:35.899Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 11,
+      "timestamp": "2026-09-23T10:11:35.999Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 12,
+      "timestamp": "2026-09-23T10:11:36.069Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 13,
+      "timestamp": "2026-09-23T10:11:36.121Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 14,
+      "timestamp": "2026-09-23T10:11:36.207Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 15,
+      "timestamp": "2026-09-23T10:11:36.285Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 16,
+      "timestamp": "2026-09-23T10:11:36.385Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 17,
+      "timestamp": "2026-09-23T10:11:36.459Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 18,
+      "timestamp": "2026-09-23T10:11:36.568Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 19,
+      "timestamp": "2026-09-23T10:11:36.664Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 20,
+      "timestamp": "2026-09-23T10:11:36.731Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 21,
+      "timestamp": "2026-09-23T10:11:36.787Z",
+      "kind": "approval",
+      "actor": "system",
+      "message": "Paused for review of the exact preview."
+    },
+    {
+      "id": 22,
+      "timestamp": "2026-09-23T10:11:36.858Z",
+      "kind": "approved",
+      "actor": "human",
+      "message": "The operator approved the bound preview."
+    },
+    {
+      "id": 23,
+      "timestamp": "2026-09-23T10:11:36.871Z",
+      "kind": "approval_consumed",
+      "actor": "system",
+      "message": "Consumed the single-use approval."
+    },
+    {
+      "id": 24,
+      "timestamp": "2026-09-23T10:11:36.913Z",
+      "kind": "commit_sent",
+      "actor": "system",
+      "message": "Dispatched the approved write; confirmation is required."
+    },
+    {
+      "id": 25,
+      "timestamp": "2026-09-23T10:11:37.039Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 26,
+      "timestamp": "2026-09-23T10:11:37.271Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 27,
+      "timestamp": "2026-09-23T10:11:37.354Z",
+      "kind": "finished",
+      "actor": "system",
+      "message": "Finished with the recorded outcome code."
+    }
+  ],
+  "approval": {
+    "consumed": true,
+    "expiresAt": "2026-09-23T10:16:36.787Z",
+    "summary": {
+      "clientReference": "[redacted]",
+      "firstName": "[redacted]",
+      "lastName": "[redacted]",
+      "office": "Head Office",
+      "legalForm": "[redacted]",
+      "status": "Active",
+      "submittedOn": "[redacted]",
+      "activationDate": "[redacted]",
+      "isStaff": "[redacted]",
+      "opensSavingsAccount": "[redacted]",
+      "previewText": "[redacted]"
+    }
+  },
+  "evidencePolicy": "audit-v1: identifiers, names, goal, raw errors, free-form text and approval tokens omitted",
+  "artifactFile": "artifact.json",
+  "artifactDigest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a",
+  "executedSteps": [
+    {
+      "id": "open",
+      "state": "verified",
+      "action": "navigate",
+      "effect": "read",
+      "purpose": "Open the banking application"
+    },
+    {
+      "id": "discovered-step-1",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested clientReference"
+    },
+    {
+      "id": "discovered-step-2",
+      "state": "verified",
+      "action": "press",
+      "effect": "form",
+      "purpose": "press the observed textbox"
+    },
+    {
+      "id": "verify-member-absent",
+      "state": "verified",
+      "action": "checkpoint",
+      "effect": "read",
+      "purpose": "Verify the new member reference is unused",
+      "checkpoint": "member_absent"
+    },
+    {
+      "id": "discovered-step-4",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Create Client"
+    },
+    {
+      "id": "discovered-step-5",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click the observed combobox"
+    },
+    {
+      "id": "discovered-step-6",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Head Office"
+    },
+    {
+      "id": "discovered-step-7",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested clientReference"
+    },
+    {
+      "id": "discovered-step-8",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested firstName"
+    },
+    {
+      "id": "discovered-step-9",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested lastName"
+    },
+    {
+      "id": "discovered-step-10",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested memberActivationDate"
+    },
+    {
+      "id": "discovered-step-11",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click the observed checkbox"
+    },
+    {
+      "id": "discovered-step-12",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested memberActivationDate"
+    },
+    {
+      "id": "discovered-step-13",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Next"
+    },
+    {
+      "id": "discovered-step-14",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Next"
+    },
+    {
+      "id": "verify-preview",
+      "state": "verified",
+      "action": "checkpoint",
+      "effect": "read",
+      "purpose": "Verify new member preview",
+      "checkpoint": "member_preview"
+    },
+    {
+      "id": "discovered-step-15",
+      "state": "verified",
+      "action": "click",
+      "effect": "commit",
+      "purpose": "Submit the reviewed details"
+    },
+    {
+      "id": "verify-member_created",
+      "state": "verified",
+      "action": "checkpoint",
+      "effect": "read",
+      "purpose": "Verify member_created",
+      "checkpoint": "member_created"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "profile": "mifos-web-1.11-fineract-1.11.0",
+  "verifiedAt": "2026-09-23",
+  "webApp": {
+    "source": "https://github.com/openMF/web-app/tree/v1.0.0-fineract1.11",
+    "release": "https://github.com/openMF/web-app/releases/tag/v1.0.0-fineract1.11",
+    "image": "openmf/web-app:1.11",
+    "digest": "sha256:240170a4ee49b5a6138a8f501f471b625b4c4de8c85e88493ff6a5cd940e81f6",
+    "platforms": ["linux/amd64"],
+    "manifestSource": "https://hub.docker.com/v2/repositories/openmf/web-app/tags/1.11"
+  },
+  "fineract": {
+    "source": "https://github.com/apache/fineract/tree/1.11.0",
+    "image": "openmf/fineract:1.11.0",
+    "digest": "sha256:19ded49d683b8bd349a0109d9d82f036932124d479a42af985001966845072d8",
+    "platforms": ["linux/amd64", "linux/arm64"],
+    "manifestSource": "https://hub.docker.com/v2/repositories/openmf/fineract/tags/1.11.0",
+    "observedRuntime": {
+      "gitCommit": "843b27926e516420297f40655fa734277195d773",
+      "gitTag": "1.11.0",
+      "buildVersion": "1.12.0-SNAPSHOT",
+      "gitDirty": false,
+      "source": "/fineract-provider/actuator/info"
+    }
+  },
+  "postgres": {
+    "image": "postgres:16.1",
+    "digest": "sha256:09f23e02d76670d3b346a3c00aa33a27cf57aab8341eedfcdaed41459d14f5c4",
+    "platforms": ["linux/amd64", "linux/arm64"],
+    "manifestSource": "https://hub.docker.com/v2/repositories/library/postgres/tags/16.1"
+  }
+}

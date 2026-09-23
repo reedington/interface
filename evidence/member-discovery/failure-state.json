@@ -1,0 +1,84 @@
+{
+  "runId": "fcb5581e-8204-46ab-9a44-2fc85d0d7af1",
+  "policy": "geometry-only-v1",
+  "outcomeCode": "MEMBER_REFERENCE_EXISTS",
+  "stepIndex": 3,
+  "structure": {
+    "title": "[redacted]",
+    "controls": [
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "input",
+        "disabled": false
+      },
+      {
+        "tag": "input",
+        "type": "checkbox",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      },
+      {
+        "tag": "table",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "type": "button",
+        "disabled": true
+      },
+      {
+        "tag": "button",
+        "type": "button",
+        "disabled": true
+      },
+      {
+        "tag": "button",
+        "type": "button",
+        "disabled": true
+      },
+      {
+        "tag": "button",
+        "type": "button",
+        "disabled": true
+      },
+      {
+        "tag": "table",
+        "disabled": false
+      },
+      {
+        "tag": "button",
+        "disabled": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,515 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "verifiedAt": "2026-09-23T10:12:01.986Z",
+  "target": {
+    "id": "mifos-x",
+    "origin": "http://127.0.0.1:4201",
+    "environment": "Isolated local Docker stack containing fictional assessment fixtures."
+  },
+  "harness": {
+    "path": "tests/mifos-recovery-e2e.ts",
+    "sha256": "0d11ab3a14adbe3c97f3d3c8b8ed59338507c29eb5adb19b28d665e778965754",
+    "command": "INTERFACE_ENV_FILE=/absolute/path/to/isolated.env npm run test:mifos:recovery"
+  },
+  "privacy": "Run and session IDs and allowlisted audit metadata retained. Names, business identifiers, balances, goals, raw error text, inputs, outputs, preview text, credentials, and approval tokens omitted.",
+  "fixturePreparation": "An earlier harness attempt created one fictional pending savings application through the normal exact-preview approval and UI submission path, providing two same-product accounts. The successful run reused that fixture and dispatched no business commits.",
+  "checks": [
+    {
+      "id": "member-bound-account-selection",
+      "runId": "9e400a57-1adb-4da9-b385-670e780cb06c",
+      "sessionId": "3c5cc45c-3716-4382-9a09-e549802f57a3",
+      "observedBoundary": {
+        "status": "awaiting_human",
+        "owner": "none",
+        "code": "ACCOUNT_SELECTION_REQUIRED",
+        "effect": "none",
+        "source": "Assertions in the successfully executed harness; the terminal run clears its intervention."
+      },
+      "assertions": [
+        "At least two visible accounts matched the verified member and requested product; an active seeded account was available.",
+        "A stale ownership epoch was rejected with HTTP 409.",
+        "An account belonging to the other fixture member and a nonexistent account were rejected with HTTP 400.",
+        "Rejected selections did not populate the resolved account reference.",
+        "A valid choice was freshly verified and bound to the requested member before continuation.",
+        "The session ID and the actual Playwright Page object remained identical across selection and completion.",
+        "The requested account and its expected fixture balance passed the final output assertions.",
+        "No business commit request and no model call occurred during selection and continuation."
+      ],
+      "audit": {
+        "id": "9e400a57-1adb-4da9-b385-670e780cb06c",
+        "targetId": "mifos-x",
+        "mode": "replay",
+        "task": "balance",
+        "capabilityId": "mifos-balance-v1",
+        "capabilityDigest": "f04bde94b4d7e5bf35baa1aee3334c4580a28a60dd882255f43e393b746ed7f3",
+        "status": "completed",
+        "result": "succeeded",
+        "outcomeCode": "VERIFIED",
+        "effect": "none",
+        "createdAt": "2026-09-23T10:11:54.441Z",
+        "updatedAt": "2026-09-23T10:11:57.300Z",
+        "finishedAt": "2026-09-23T10:11:57.300Z",
+        "owner": "none",
+        "epoch": 4,
+        "sessionId": "3c5cc45c-3716-4382-9a09-e549802f57a3",
+        "stepIndex": 7,
+        "modelCalls": 0,
+        "steps": [
+          {
+            "id": "open",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "search-value",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "search",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "client",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "verify-client",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "account",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "verify-account",
+            "state": "verified",
+            "label": "[recorded step]"
+          }
+        ],
+        "events": [
+          {
+            "id": 1,
+            "timestamp": "2026-09-23T10:11:54.442Z",
+            "kind": "created",
+            "actor": "system",
+            "message": "A run was requested."
+          },
+          {
+            "id": 2,
+            "timestamp": "2026-09-23T10:11:55.057Z",
+            "kind": "policy",
+            "actor": "system",
+            "message": "The worker blocked an action outside its policy."
+          },
+          {
+            "id": 3,
+            "timestamp": "2026-09-23T10:11:55.645Z",
+            "kind": "policy",
+            "actor": "system",
+            "message": "The worker blocked an action outside its policy."
+          },
+          {
+            "id": 4,
+            "timestamp": "2026-09-23T10:11:56.271Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 5,
+            "timestamp": "2026-09-23T10:11:56.334Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 6,
+            "timestamp": "2026-09-23T10:11:56.391Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 7,
+            "timestamp": "2026-09-23T10:11:56.583Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 8,
+            "timestamp": "2026-09-23T10:11:56.716Z",
+            "kind": "intervention",
+            "actor": "system",
+            "message": "Automation yielded for the recorded intervention code."
+          },
+          {
+            "id": 9,
+            "timestamp": "2026-09-23T10:11:56.844Z",
+            "kind": "account_selected",
+            "actor": "human",
+            "message": "The operator chose from freshly verified member accounts."
+          },
+          {
+            "id": 10,
+            "timestamp": "2026-09-23T10:11:56.860Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 11,
+            "timestamp": "2026-09-23T10:11:57.032Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 12,
+            "timestamp": "2026-09-23T10:11:57.232Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 13,
+            "timestamp": "2026-09-23T10:11:57.300Z",
+            "kind": "finished",
+            "actor": "system",
+            "message": "Finished with the recorded outcome code."
+          }
+        ],
+        "evidencePolicy": "audit-v1: identifiers, names, goal, raw errors, free-form text and approval tokens omitted"
+      }
+    },
+    {
+      "id": "manual-repair-and-handback",
+      "runId": "98f92f91-78ff-4d64-9c10-3b9cb0561c4e",
+      "sessionId": "30066f85-fc17-4146-8bcd-b86285c03ade",
+      "faultInjection": {
+        "type": "Test-only damaged saved capability",
+        "capabilityId": "mifos-prepare-manual-repair-test",
+        "description": "The harness copied the authored preparation contract and deliberately replaced its external-reference input binding with an incorrect literal. This is a controlled real-form mismatch, not a naturally occurring service outage."
+      },
+      "observedBoundary": {
+        "status": "awaiting_human",
+        "code": "OBSERVATION_FAILED",
+        "reasonCategory": "Preview external reference did not match the requested reference.",
+        "source": "Exact intervention code and reason pattern asserted before takeover; the terminal run clears its intervention."
+      },
+      "assertions": [
+        "The real Mifos preview verifier detected the deliberately incorrect form value and yielded control.",
+        "Takeover granted human ownership in the retained browser session.",
+        "Every repair mutation used the public humanInput endpoint with the current epoch, a fresh frame revision, and a unique command ID.",
+        "The operator clicked the enabled Details step header, corrected the visible reference field, and advanced to Preview.",
+        "Resume handed the same Playwright Page object and session ID back to automation.",
+        "The repaired preview passed member, product, and requested-reference verification.",
+        "Manual-input events were recorded; no business commit or model call occurred; final effect remained none."
+      ],
+      "audit": {
+        "id": "98f92f91-78ff-4d64-9c10-3b9cb0561c4e",
+        "targetId": "mifos-x",
+        "mode": "replay",
+        "task": "prepare",
+        "capabilityId": "mifos-prepare-manual-repair-test",
+        "capabilityDigest": "2467ef0588a37632284dc2b595fa2a05e79fc07a29a905722d1f8bd6e52ea1ee",
+        "status": "completed",
+        "result": "succeeded",
+        "outcomeCode": "VERIFIED",
+        "effect": "none",
+        "createdAt": "2026-09-23T10:11:57.335Z",
+        "updatedAt": "2026-09-23T10:12:01.883Z",
+        "finishedAt": "2026-09-23T10:12:01.883Z",
+        "owner": "none",
+        "epoch": 5,
+        "sessionId": "30066f85-fc17-4146-8bcd-b86285c03ade",
+        "stepIndex": 14,
+        "modelCalls": 0,
+        "steps": [
+          {
+            "id": "open",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "search-value",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "search",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "client",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "verify-client",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "menu",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "applications-menu",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "new",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "product",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "reference",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "next-details",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "next-terms",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "next-charges",
+            "state": "verified",
+            "label": "[recorded step]"
+          },
+          {
+            "id": "verify-preview",
+            "state": "verified",
+            "label": "[recorded step]"
+          }
+        ],
+        "events": [
+          {
+            "id": 1,
+            "timestamp": "2026-09-23T10:11:57.336Z",
+            "kind": "created",
+            "actor": "system",
+            "message": "A run was requested."
+          },
+          {
+            "id": 2,
+            "timestamp": "2026-09-23T10:11:57.486Z",
+            "kind": "policy",
+            "actor": "system",
+            "message": "The worker blocked an action outside its policy."
+          },
+          {
+            "id": 3,
+            "timestamp": "2026-09-23T10:11:58.069Z",
+            "kind": "policy",
+            "actor": "system",
+            "message": "The worker blocked an action outside its policy."
+          },
+          {
+            "id": 4,
+            "timestamp": "2026-09-23T10:11:58.672Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 5,
+            "timestamp": "2026-09-23T10:11:58.720Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 6,
+            "timestamp": "2026-09-23T10:11:58.775Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 7,
+            "timestamp": "2026-09-23T10:11:58.974Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 8,
+            "timestamp": "2026-09-23T10:11:59.080Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 9,
+            "timestamp": "2026-09-23T10:11:59.205Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 10,
+            "timestamp": "2026-09-23T10:11:59.304Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 11,
+            "timestamp": "2026-09-23T10:11:59.491Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 12,
+            "timestamp": "2026-09-23T10:11:59.869Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 13,
+            "timestamp": "2026-09-23T10:11:59.960Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 14,
+            "timestamp": "2026-09-23T10:12:00.071Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 15,
+            "timestamp": "2026-09-23T10:12:00.170Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 16,
+            "timestamp": "2026-09-23T10:12:00.285Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 17,
+            "timestamp": "2026-09-23T10:12:00.386Z",
+            "kind": "intervention",
+            "actor": "system",
+            "message": "Automation yielded for the recorded intervention code."
+          },
+          {
+            "id": 18,
+            "timestamp": "2026-09-23T10:12:00.509Z",
+            "kind": "takeover",
+            "actor": "human",
+            "message": "Granted human control after automated input drained."
+          },
+          {
+            "id": 19,
+            "timestamp": "2026-09-23T10:12:00.706Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 20,
+            "timestamp": "2026-09-23T10:12:00.895Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 21,
+            "timestamp": "2026-09-23T10:12:00.964Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 22,
+            "timestamp": "2026-09-23T10:12:01.026Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 23,
+            "timestamp": "2026-09-23T10:12:01.221Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 24,
+            "timestamp": "2026-09-23T10:12:01.294Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 25,
+            "timestamp": "2026-09-23T10:12:01.598Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 26,
+            "timestamp": "2026-09-23T10:12:01.794Z",
+            "kind": "manual",
+            "actor": "human",
+            "message": "Applied operator input to the existing session."
+          },
+          {
+            "id": 27,
+            "timestamp": "2026-09-23T10:12:01.860Z",
+            "kind": "resume",
+            "actor": "human",
+            "message": "Resumed after target and identity validation."
+          },
+          {
+            "id": 28,
+            "timestamp": "2026-09-23T10:12:01.875Z",
+            "kind": "step",
+            "actor": "automation",
+            "message": "Executed and verified the recorded step."
+          },
+          {
+            "id": 29,
+            "timestamp": "2026-09-23T10:12:01.883Z",
+            "kind": "finished",
+            "actor": "system",
+            "message": "Finished with the recorded outcome code."
+          }
+        ],
+        "evidencePolicy": "audit-v1: identifiers, names, goal, raw errors, free-form text and approval tokens omitted"
+      }
+    }
+  ]
+}

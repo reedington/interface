@@ -1,0 +1,128 @@
+# Local synthetic-data target only. Image provenance: versions.json and NOTICE.md.
+name: interface-mifos
+
+services:
+  db:
+    image: postgres:16.1@sha256:09f23e02d76670d3b346a3c00aa33a27cf57aab8341eedfcdaed41459d14f5c4
+    environment:
+      POSTGRES_USER: fineract
+      POSTGRES_PASSWORD: interface-local-db-only
+      POSTGRES_DB: fineract_tenants
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./01-init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U fineract -d fineract_tenants']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    mem_limit: 768m
+    logging: &logs
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+
+  fineract:
+    image: openmf/fineract:1.11.0@sha256:19ded49d683b8bd349a0109d9d82f036932124d479a42af985001966845072d8
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      FINERACT_NODE_ID: '1'
+      FINERACT_HIKARI_DRIVER_SOURCE_CLASS_NAME: org.postgresql.Driver
+      FINERACT_HIKARI_JDBC_URL: jdbc:postgresql://db:5432/fineract_tenants
+      FINERACT_HIKARI_USERNAME: fineract
+      FINERACT_HIKARI_PASSWORD: interface-local-db-only
+      FINERACT_HIKARI_MINIMUM_IDLE: '1'
+      FINERACT_HIKARI_MAXIMUM_POOL_SIZE: '5'
+      FINERACT_DEFAULT_TENANTDB_HOSTNAME: db
+      FINERACT_DEFAULT_TENANTDB_PORT: '5432'
+      FINERACT_DEFAULT_TENANTDB_UID: fineract
+      FINERACT_DEFAULT_TENANTDB_PWD: interface-local-db-only
+      FINERACT_DEFAULT_TENANTDB_CONN_PARAMS: ''
+      FINERACT_DEFAULT_TENANTDB_TIMEZONE: America/New_York
+      FINERACT_DEFAULT_TENANTDB_IDENTIFIER: default
+      FINERACT_DEFAULT_TENANTDB_NAME: fineract_default
+      FINERACT_DEFAULT_TENANTDB_DESCRIPTION: Interface US synthetic credit union
+      FINERACT_DEFAULT_MASTER_PASSWORD: interface-local-master-only
+      FINERACT_DEFAULT_TENANTDB_MASTER_PASSWORD: interface-local-master-only
+      FINERACT_SERVER_SSL_ENABLED: 'false'
+      FINERACT_SERVER_PORT: '8080'
+      FINERACT_SECURITY_BASICAUTH_ENABLED: 'true'
+      FINERACT_SECURITY_OAUTH_ENABLED: 'false'
+      FINERACT_SECURITY_2FA_ENABLED: 'false'
+      FINERACT_REMOTE_JOB_MESSAGE_HANDLER_SPRING_EVENTS_ENABLED: 'true'
+      FINERACT_REMOTE_JOB_MESSAGE_HANDLER_JMS_ENABLED: 'false'
+      FINERACT_REMOTE_JOB_MESSAGE_HANDLER_KAFKA_ENABLED: 'false'
+      FINERACT_MANAGEMENT_ENDPOINT_WEB_EXPOSURE_INCLUDE: health,info
+      FINERACT_MANAGEMENT_CLOUDWATCH_ENABLED: 'false'
+      JAVA_TOOL_OPTIONS: >-
+        -Xms256m -Xmx1536m -XX:+UseContainerSupport -XX:+UseStringDeduplication
+        --add-exports=java.naming/com.sun.jndi.ldap=ALL-UNNAMED
+        --add-opens=java.base/java.lang=ALL-UNNAMED
+        --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+        --add-opens=java.base/java.io=ALL-UNNAMED
+        --add-opens=java.base/java.security=ALL-UNNAMED
+        --add-opens=java.base/java.util=ALL-UNNAMED
+        --add-opens=java.management/javax.management=ALL-UNNAMED
+        --add-opens=java.naming/javax.naming=ALL-UNNAMED
+    # Socket health gates nginx startup; mifos-stack.mjs then verifies authenticated API readiness.
+    healthcheck:
+      test: [CMD-SHELL, 'nc -z localhost 8080']
+      start_period: 60s
+      interval: 10s
+      timeout: 5s
+      retries: 60
+    mem_limit: 2560m
+    logging: *logs
+
+  web-app:
+    image: openmf/web-app:1.11@sha256:240170a4ee49b5a6138a8f501f471b625b4c4de8c85e88493ff6a5cd940e81f6
+    # This upstream UI image is amd64 only; Docker Desktop emulates it on Apple Silicon.
+    # Fineract and PostgreSQL use their native arm64/amd64 manifests.
+    platform: linux/amd64
+    depends_on:
+      fineract:
+        condition: service_healthy
+    ports:
+      - '127.0.0.1:${MIFOS_PORT:-4200}:80'
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      FINERACT_API_URLS: ${MIFOS_ORIGIN:-http://127.0.0.1:4200}
+      FINERACT_API_URL: ${MIFOS_ORIGIN:-http://127.0.0.1:4200}
+      FINERACT_API_PROVIDER: /fineract-provider/api
+      FINERACT_API_ACTUATOR: /fineract-provider
+      FINERACT_API_VERSION: /v1
+      FINERACT_PLATFORM_TENANT_IDENTIFIER: default
+      FINERACT_PLATFORM_TENANTS_IDENTIFIER: default
+      MIFOS_DEFAULT_LANGUAGE: en-US
+      MIFOS_SUPPORTED_LANGUAGES: en-US
+      MIFOS_PRELOAD_CLIENTS: 'true'
+      MIFOS_DEFAULT_CHAR_DELIMITER: ','
+      MIFOS_DISPLAY_BACKEND_INFO: 'true'
+      MIFOS_DISPLAY_TENANT_SELECTOR: ''
+      MIFOS_WAIT_TIME_FOR_NOTIFICATIONS: '60'
+      MIFOS_WAIT_TIME_FOR_CATCHUP: '30'
+      MIFOS_SESSION_IDLE_TIMEOUT: '900000'
+      # This pinned UI's env template emits strings; an empty string is falsey.
+      # The string 'false' incorrectly selects OAuth and sends requests to /token.
+      MIFOS_OAUTH_SERVER_ENABLED: ''
+      MIFOS_OAUTH_SERVER_URL: ''
+      MIFOS_OAUTH_CLIENT_ID: ''
+      MIFOS_MIN_PASSWORD_LENGTH: '8'
+      VNEXT_API_URL: ''
+      VNEXT_API_PROVIDER: ''
+      VNEXT_API_VERSION: ''
+      VNEXT_INTERBANK_TRANSFERS: 'false'
+    healthcheck:
+      test: [CMD-SHELL, 'curl --fail --silent --output /dev/null http://127.0.0.1/']
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    mem_limit: 256m
+    logging: *logs
+
+volumes:
+  database:

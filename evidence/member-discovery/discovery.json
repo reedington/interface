@@ -1,0 +1,507 @@
+{
+  "id": "5449e1b6-4b9f-4794-9391-56a97e0944b2",
+  "targetId": "mifos-x",
+  "mode": "discovery",
+  "task": "member",
+  "goal": "[redacted]",
+  "discoveredCapabilityId": "discovered-5449e1b6",
+  "status": "completed",
+  "result": "succeeded",
+  "outcomeCode": "DISCOVERED",
+  "effect": "verified",
+  "inputs": {
+    "clientReference": "[redacted]",
+    "accountReference": "[redacted]",
+    "product": "Everyday Savings",
+    "externalReference": "[redacted]",
+    "firstName": "[redacted]",
+    "lastName": "[redacted]"
+  },
+  "resolvedInputs": {
+    "memberActivationDate": "[redacted]"
+  },
+  "output": {
+    "clientReference": "[redacted]",
+    "memberAccountNumber": "[redacted]",
+    "firstName": "[redacted]",
+    "lastName": "[redacted]",
+    "memberName": "[redacted]",
+    "office": "Head Office",
+    "status": "Active",
+    "activationDate": "[redacted]"
+  },
+  "createdAt": "2026-09-23T10:11:02.075Z",
+  "updatedAt": "2026-09-23T10:11:34.106Z",
+  "finishedAt": "2026-09-23T10:11:34.106Z",
+  "owner": "none",
+  "epoch": 4,
+  "sessionId": "8e1b0660-8d87-4698-8216-fd81a39deb7d",
+  "stepIndex": 14,
+  "modelCalls": 14,
+  "provider": "openai",
+  "model": "gpt-4.1",
+  "discoveryBudget": {
+    "maxModelCalls": 30,
+    "maxActions": 24,
+    "maxActiveMs": 300000,
+    "maxUnchangedObservations": 4,
+    "maxConsecutiveWaits": 3,
+    "actions": 14,
+    "activeMs": 27818,
+    "unchangedObservations": 0,
+    "consecutiveWaits": 0
+  },
+  "steps": [
+    {
+      "id": "discovered-step-1",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-2",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-4",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-5",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-6",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-7",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-8",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-9",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-10",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-11",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-12",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-13",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-14",
+      "state": "verified",
+      "label": "[recorded step]"
+    },
+    {
+      "id": "discovered-step-15",
+      "state": "verified",
+      "label": "[recorded step]"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "timestamp": "2026-09-23T10:11:02.076Z",
+      "kind": "created",
+      "actor": "system",
+      "message": "A run was requested."
+    },
+    {
+      "id": 2,
+      "timestamp": "2026-09-23T10:11:02.727Z",
+      "kind": "policy",
+      "actor": "system",
+      "message": "The worker blocked an action outside its policy."
+    },
+    {
+      "id": 3,
+      "timestamp": "2026-09-23T10:11:03.324Z",
+      "kind": "policy",
+      "actor": "system",
+      "message": "The worker blocked an action outside its policy."
+    },
+    {
+      "id": 4,
+      "timestamp": "2026-09-23T10:11:05.206Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 5,
+      "timestamp": "2026-09-23T10:11:07.925Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 6,
+      "timestamp": "2026-09-23T10:11:08.021Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 7,
+      "timestamp": "2026-09-23T10:11:09.863Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 8,
+      "timestamp": "2026-09-23T10:11:09.953Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 9,
+      "timestamp": "2026-09-23T10:11:11.382Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 10,
+      "timestamp": "2026-09-23T10:11:11.444Z",
+      "kind": "input_resolved",
+      "actor": "system",
+      "message": "Resolved missing fields from the visible target."
+    },
+    {
+      "id": 11,
+      "timestamp": "2026-09-23T10:11:11.468Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 12,
+      "timestamp": "2026-09-23T10:11:13.122Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 13,
+      "timestamp": "2026-09-23T10:11:13.204Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 14,
+      "timestamp": "2026-09-23T10:11:15.553Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 15,
+      "timestamp": "2026-09-23T10:11:15.636Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 16,
+      "timestamp": "2026-09-23T10:11:17.085Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 17,
+      "timestamp": "2026-09-23T10:11:17.170Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 18,
+      "timestamp": "2026-09-23T10:11:20.138Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 19,
+      "timestamp": "2026-09-23T10:11:20.222Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 20,
+      "timestamp": "2026-09-23T10:11:22.319Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 21,
+      "timestamp": "2026-09-23T10:11:22.402Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 22,
+      "timestamp": "2026-09-23T10:11:23.807Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 23,
+      "timestamp": "2026-09-23T10:11:23.903Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 24,
+      "timestamp": "2026-09-23T10:11:25.274Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 25,
+      "timestamp": "2026-09-23T10:11:25.373Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 26,
+      "timestamp": "2026-09-23T10:11:27.698Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 27,
+      "timestamp": "2026-09-23T10:11:27.786Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 28,
+      "timestamp": "2026-09-23T10:11:29.138Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 29,
+      "timestamp": "2026-09-23T10:11:29.219Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 30,
+      "timestamp": "2026-09-23T10:11:31.553Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 31,
+      "timestamp": "2026-09-23T10:11:31.638Z",
+      "kind": "model",
+      "actor": "system",
+      "message": "Requested the next bounded UI action."
+    },
+    {
+      "id": 32,
+      "timestamp": "2026-09-23T10:11:33.467Z",
+      "kind": "approval",
+      "actor": "system",
+      "message": "Paused for review of the exact preview."
+    },
+    {
+      "id": 33,
+      "timestamp": "2026-09-23T10:11:33.555Z",
+      "kind": "approved",
+      "actor": "human",
+      "message": "The operator approved the bound preview."
+    },
+    {
+      "id": 34,
+      "timestamp": "2026-09-23T10:11:33.567Z",
+      "kind": "approval_consumed",
+      "actor": "system",
+      "message": "Consumed the single-use approval."
+    },
+    {
+      "id": 35,
+      "timestamp": "2026-09-23T10:11:33.599Z",
+      "kind": "commit_sent",
+      "actor": "system",
+      "message": "Dispatched the approved write; confirmation is required."
+    },
+    {
+      "id": 36,
+      "timestamp": "2026-09-23T10:11:33.749Z",
+      "kind": "step",
+      "actor": "automation",
+      "message": "Executed and verified the recorded step."
+    },
+    {
+      "id": 37,
+      "timestamp": "2026-09-23T10:11:34.106Z",
+      "kind": "finished",
+      "actor": "system",
+      "message": "Finished with the recorded outcome code."
+    }
+  ],
+  "approval": {
+    "consumed": true,
+    "expiresAt": "2026-09-23T10:16:33.467Z",
+    "summary": {
+      "clientReference": "[redacted]",
+      "firstName": "[redacted]",
+      "lastName": "[redacted]",
+      "office": "Head Office",
+      "legalForm": "[redacted]",
+      "status": "Active",
+      "submittedOn": "[redacted]",
+      "activationDate": "[redacted]",
+      "isStaff": "[redacted]",
+      "opensSavingsAccount": "[redacted]",
+      "previewText": "[redacted]"
+    }
+  },
+  "evidencePolicy": "audit-v1: identifiers, names, goal, raw errors, free-form text and approval tokens omitted",
+  "artifactFile": "artifact.json",
+  "artifactDigest": "816d56511d988e4b6af99674e499e93d42e5528d94404d4ec093dd7cc0f9e69a",
+  "executedSteps": [
+    {
+      "id": "discovered-step-1",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested clientReference"
+    },
+    {
+      "id": "discovered-step-2",
+      "state": "verified",
+      "action": "press",
+      "effect": "form",
+      "purpose": "press the observed textbox"
+    },
+    {
+      "id": "discovered-step-4",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Create Client"
+    },
+    {
+      "id": "discovered-step-5",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click the observed combobox"
+    },
+    {
+      "id": "discovered-step-6",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Head Office"
+    },
+    {
+      "id": "discovered-step-7",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested clientReference"
+    },
+    {
+      "id": "discovered-step-8",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested firstName"
+    },
+    {
+      "id": "discovered-step-9",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested lastName"
+    },
+    {
+      "id": "discovered-step-10",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested memberActivationDate"
+    },
+    {
+      "id": "discovered-step-11",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click the observed checkbox"
+    },
+    {
+      "id": "discovered-step-12",
+      "state": "verified",
+      "action": "fill",
+      "effect": "form",
+      "purpose": "Enter the requested memberActivationDate"
+    },
+    {
+      "id": "discovered-step-13",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Next"
+    },
+    {
+      "id": "discovered-step-14",
+      "state": "verified",
+      "action": "click",
+      "effect": "read",
+      "purpose": "click Next"
+    },
+    {
+      "id": "discovered-step-15",
+      "state": "verified",
+      "action": "click",
+      "effect": "commit",
+      "purpose": "Submit the reviewed details"
+    }
+  ]
+}
