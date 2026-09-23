@@ -161,6 +161,7 @@ export interface Run {
   targetId?: 'local-banking-lab'|'mifos-x';
   id: string; mode: 'replay'|'discovery'; task: TaskKind; goal: string;
   capabilityId?: string; capabilityDigest?: string; status: RunStatus;
+  replayPurpose?: 'validation'|'execution';
   result?: RunResult; effect: 'none'|'verified'|'unknown'; outcomeCode?: string;
   /** Intermediate checkpoints may use a record; terminal success must pass its FinalBusinessOutput contract. */
   output?: Record<string,unknown>; inputs: RunInputs; resolvedInputs?: Partial<RunInputs>; scenario: Scenario;
@@ -174,6 +175,7 @@ export interface Run {
 }
 export const createRunSchema = z.object({
   mode: z.enum(['replay','discovery']).default('replay'),
+  replayPurpose: z.enum(['validation','execution']).optional(),
   task: taskSchema.default('balance'), capabilityId: z.string().optional(),
   goal: z.string().min(1).max(1200).optional(),
   goalReviewed: z.boolean().optional(),

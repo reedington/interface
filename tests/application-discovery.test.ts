@@ -102,7 +102,7 @@ test('application discovery with mocked OpenAI transport preserves replay and su
       throw new Error(`Application run did not settle: ${JSON.stringify(await request<Run>(`/api/runs/${id}`))}`);
     }
     async function create(task: 'prepare' | 'submit', mode: 'discovery' | 'replay', inputs: Partial<RunInputs>, capabilityId?: string): Promise<Run> {
-      return request('/api/runs', { task, mode, capabilityId, scenario: 'normal',
+      return request('/api/runs', { task, mode, replayPurpose: 'validation', capabilityId, scenario: 'normal',
         provider: 'openai', model: 'mock-application-observer', idempotencyKey: randomUUID(),
         inputs: { clientReference: '10001', product: 'Everyday Savings', externalReference: `TEST-${randomUUID().slice(0, 8)}`, ...inputs } });
     }

@@ -7,8 +7,8 @@ The source requirements are in [Assignment A — Computer-Use Automation System.
 | Decision | Recommendation |
 |---|---|
 | Desktop and execution | Electron/React; local TypeScript worker, sandboxed Chrome and SQLite now; shared-host browser workers for a later trusted-tenant pilot |
-| Target application | Local Credit Union Lab for current synthetic tests; Mifos X web app backed by Apache Fineract for the planned real application integration |
-| First capabilities | Read a savings balance; prepare an application to Preview; submit the reviewed application |
+| Target application | Pinned local Mifos X/Fineract/PostgreSQL integration is implemented; the separate Local Credit Union Lab provides fault-injection coverage |
+| First capabilities | Read a savings balance; prepare to Preview; submit after exact-preview approval; create a new member after approval |
 | Discovery provider | Compare Anthropic, OpenAI and Google computer-use offerings before choosing a default |
 | Production execution | Versioned, policy-checked deterministic replay with independently verified outcomes |
 

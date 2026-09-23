@@ -69,7 +69,7 @@ function input(firstName:string,lastName:string):RunInputs{
   return {clientReference:String(randomInt(100_000_000_000,999_999_999_999)),firstName,lastName,
     accountReference:'',product:'Growth Savings',externalReference:`MEMBER-QA-${randomUUID().slice(0,12)}`};
 }
-async function createMember(inputs:RunInputs):Promise<Run>{return request('/api/runs',{mode:'replay',task:'member',inputs,idempotencyKey:randomUUID()});}
+async function createMember(inputs:RunInputs):Promise<Run>{return request('/api/runs',{mode:'replay',replayPurpose:'validation',task:'member',inputs,idempotencyKey:randomUUID()});}
 function commits(start:number){return targetRequests.slice(start).filter(request=>request.policy==='commit');}
 function verified(run:Run){assert.equal(run.result,'succeeded',JSON.stringify(run));assert.equal(run.targetId,'mifos-x');assert.equal(run.modelCalls,0);}
 function exactMember(run:Run,inputs:RunInputs){
@@ -122,7 +122,7 @@ try{
   await pass('A second member and name receive a separate preview; takeover revokes approval and Stop leaves that member uncreated',stopped);
 
   const prepareStart=targetRequests.length;
-  const prepared=await wait((await request('/api/runs',{mode:'replay',task:'prepare',inputs:{...first,externalReference:`SAVINGS-QA-${randomUUID().slice(0,12)}`},idempotencyKey:randomUUID()})).id);
+  const prepared=await wait((await request('/api/runs',{mode:'replay',replayPurpose:'validation',task:'prepare',inputs:{...first,externalReference:`SAVINGS-QA-${randomUUID().slice(0,12)}`},idempotencyKey:randomUUID()})).id);
   verified(prepared);assert.equal(prepared.effect,'none');assert.equal(prepared.output?.clientReference,first.clientReference);assert.equal(prepared.output?.product,'Growth Savings');
   assert.equal(commits(prepareStart).length,0);assert.equal(prepared.events.some(event=>event.kind==='commit_sent'),false);
   await pass('The verified new member can immediately prepare Growth Savings and stop at review with no savings write',prepared);

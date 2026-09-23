@@ -136,7 +136,7 @@ test('mocked model orchestration discovers a parameterized artifact and enforces
       assert.equal(JSON.stringify(artifact.steps).includes('SAV-1001'), false);
       await request(`/api/capabilities/${artifact.id}/approve`, {expectedDigest:artifact.digest}, 409);
 
-      const replay = await request<Run>('/api/runs', { mode: 'replay', task: 'balance', capabilityId: artifact.id,
+      const replay = await request<Run>('/api/runs', { mode: 'replay', replayPurpose: 'validation', task: 'balance', capabilityId: artifact.id,
         idempotencyKey: randomUUID(), inputs: { clientReference: '10002', accountReference: 'SAV-1002' } });
       const verified = await settle(replay.id);
       assert.equal(verified.result, 'succeeded', JSON.stringify(verified));

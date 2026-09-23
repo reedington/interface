@@ -37,16 +37,18 @@ export class Store {
     for(const c of authoredCapabilities()) if(!this.capability(c.id)) this.saveCapability(c);
     // Preserve historical digests and runs, but never replay old locale-specific selectors.
     for(const c of this.capabilities()) if(c.version==='1.0.0'&&c.status!=='quarantined'){c.status='quarantined';this.saveCapability(c);}
-    for(const run of this.runs()) if(run.status!=='completed') {
+    for(const run of this.unfinishedRuns()) {
       run.status='completed';run.result='failed';run.owner='none';run.epoch++;
       run.outcomeCode=run.effect==='unknown'?'OUTCOME_UNKNOWN':'SESSION_LOST';
       run.error='The local worker restarted. Its browser session cannot be resumed.';
       run.finishedAt=run.updatedAt=new Date().toISOString();
+      for(const step of run.steps)if(step.state==='running'||step.state==='waiting')step.state='failed';
       run.events.push({id:run.events.length+1,timestamp:run.updatedAt,kind:'recovery',message:run.error,actor:'system'});
       this.saveRun(run);
     }
   }
   private decode<T>(table:string,row:{id:string;body:string;private_state:string|null}):T{return JSON.parse(row.private_state?openPrivate(row.private_state,this.key,`${table}:${row.id}`):row.body);}
+  private unfinishedRuns():Run[] {return (this.db.prepare("SELECT * FROM runs WHERE json_extract(body,'$.status') != 'completed'").all() as unknown as StateRow[]).map(row=>this.decode<Run>('runs',row));}
   runs():Run[] { return (this.db.prepare('SELECT * FROM runs ORDER BY rowid DESC LIMIT 100').all() as unknown as StateRow[]).map(r=>this.decode<Run>('runs',r)); }
   run(id:string):Run|undefined {const row=this.db.prepare('SELECT * FROM runs WHERE id=?').get(id) as StateRow|undefined;return row?this.decode<Run>('runs',row):undefined;}
   capabilityRuns(id:string):Run[] {return (this.db.prepare("SELECT * FROM runs WHERE json_extract(body,'$.capabilityId')=? ORDER BY rowid DESC").all(id) as unknown as StateRow[]).map(row=>this.decode<Run>('runs',row));}

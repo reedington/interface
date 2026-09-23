@@ -2,13 +2,13 @@
 
 Status: construction plan with a working local browser slice, 23 September 2026. Local runtime and test evidence exist; no cloud infrastructure has been provisioned. Read [local architecture](../docs/local-architecture.md) for implemented boundaries and [system-design.md](system-design.md) for the remaining product design.
 
-The workspace contains the assignment, plans, Electron/React interface, TypeScript browser runtime and tests. There is no Git repository yet. Continue local development under the current browser-first scope. The assignment's eventual public publication/email steps are not authorization to perform them now.
+The workspace contains the assignment, plans, Electron/React interface, TypeScript browser runtime and tests. The workspace is a Git repository. The local Mifos integration, four task types, discovery/replay, approval, takeover, reconciliation, and evidence export are implemented. Continue local development under the current browser-first scope. The assignment's eventual public publication/email steps are not authorization to perform them now.
 
 ## Working agreement
 
 Build a macOS operator app, a deployable cloud execution service and the isolated Mifos X web app (backed by Apache Fineract) as the target. Keep shared types and the deterministic interpreter independent of Electron, the model provider and AWS. A new contributor must be able to run the target and core tests locally without cloud credentials; live discovery additionally requires a model credential. See [delivery-and-cost.md](delivery-and-cost.md) for effort allowances, illustrative milestone dates and operating-cost assumptions.
 
-Proposed repository layout:
+Future cloud-oriented repository layout (not the current local implementation):
 
 ```text
 apps/desktop/                 Electron + React operator client
@@ -27,7 +27,7 @@ README.md                     verified setup/discovery/replay commands
 REPORT.md                     concise assignment write-up after implementation
 ```
 
-The commands below are proposed project scripts to create during implementation, not commands that already work. Establish `pnpm lint`, `pnpm typecheck` and `pnpm test` in step 2. Subsequent steps introduce their named verification scripts.
+The current repository uses npm with `src/desktop`, `src/ui`, `src/server`, and `src/shared`. Run `npm run typecheck`, `npm test`, `npm run build`, and `npm run test:e2e`; Mifos and fresh-setup checks are documented in README. The pnpm commands and cloud package layout below are historical proposals for future work, not current setup instructions.
 
 ## Dependency map
 

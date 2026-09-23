@@ -48,9 +48,14 @@ try {
   const unknown=await create('submit','commit_unknown');const ua=await wait(unknown.id,r=>r.status==='awaiting_approval');
   await request(`/api/runs/${ua.id}/approve`,{epoch:ua.epoch,approvalId:ua.approval!.id});const ur=await done(ua.id);
   assert.equal(ur.effect,'unknown');assert.equal(ur.outcomeCode,'OUTCOME_UNKNOWN');assert.equal((await records()).length,2);
+  // Reproduce a crash with an uncertain run older than the recent-history window.
+  server.store.saveRun({...ur,status:'running',owner:'automation'});
+  for(let index=0;index<105;index++)server.store.saveRun({...p,id:`newer-completed-${index}`});
   await server.close();server=await startWorkbench({port:14317,targetPort:14318,dataPath});
+  assert.ok(!server.store.runs().some(run=>run.id===ur.id));
+  const recovered:Run=await request(`/api/runs/${ur.id}`);assert.equal(recovered.status,'completed');assert.equal(recovered.owner,'none');assert.equal(recovered.outcomeCode,'OUTCOME_UNKNOWN');
   const retainedFrame=await request(`/api/runs/${ur.id}/frame`);assert.ok(retainedFrame.dataUrl.startsWith('data:image/jpeg;base64,'));
-  const reconciled:Run=await request(`/api/runs/${ur.id}/reconcile`,{epoch:ur.epoch});assert.equal(reconciled.effect,'verified');assert.equal(reconciled.outcomeCode,'RECONCILED');assert.equal((await records()).length,2);pass('Lost confirmation survives restart with evidence; read-only UI reconciliation finds one persisted record without resubmitting');
+  const reconciled:Run=await request(`/api/runs/${ur.id}/reconcile`,{epoch:recovered.epoch});assert.equal(reconciled.effect,'verified');assert.equal(reconciled.outcomeCode,'RECONCILED');assert.equal((await records()).length,2);pass('An uncertain run older than 100 records recovers on restart; read-only UI reconciliation verifies it without resubmitting');
   for(const [scenario,button] of [['session_expired','Restore session'],['unexpected_dialog','Dismiss notice']] as const){
     const r=await done((await create('balance',scenario)).id);assert.equal(r.status,'awaiting_human');
     const human:Run=await request(`/api/runs/${r.id}/takeover`,{epoch:r.epoch});assert.equal(human.owner,'human');

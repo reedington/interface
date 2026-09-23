@@ -45,7 +45,7 @@ async function wait(id:string):Promise<Run>{
  throw new Error(`Run ${id} did not reach an action boundary.`);
 }
 async function create(task:TaskKind,patch:Partial<RunInputs>={},capabilityId?:string):Promise<Run>{
- return api('/api/runs',{task,mode:'replay',capabilityId,inputs:{clientReference:'10001',accountReference:'',product:'Everyday Savings',externalReference:`RECOVERY-${randomUUID().slice(0,10)}`,...patch},idempotencyKey:randomUUID()});
+ return api('/api/runs',{task,mode:'replay',replayPurpose:'validation',capabilityId,inputs:{clientReference:'10001',accountReference:'',product:'Everyday Savings',externalReference:`RECOVERY-${randomUUID().slice(0,10)}`,...patch},idempotencyKey:randomUUID()});
 }
 function success(run:Run){assert.equal(run.result,'succeeded',JSON.stringify(run));assert.equal(run.modelCalls,0);assert.equal(run.targetId,'mifos-x');}
 async function pass(check:string,run:Run){evidence.push({check,runId:run.id,sessionId:run.sessionId,status:run.status,result:run.result,outcomeCode:run.outcomeCode,modelCalls:run.modelCalls,output:run.output});await persist('running');console.log(`✓ ${check}`);}

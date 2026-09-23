@@ -290,7 +290,7 @@ export function createMifosProfile(options:MifosTargetOptions): TargetProfile {
       const value=target?.value;
       if(step.action==='press'&&value===SEARCH&&step.value?.source==='literal'&&step.value.value==='Enter'){
         await members.waitSearch(page,inputs);
-        if(tasks.get(page)!=='member'&&await page.getByText('No client was found',{exact:true}).isVisible())throw new TargetBusinessError('NOT_FOUND','Mifos did not find a member with the requested external reference.');
+        if(tasks.get(page)!=='member'&&await page.getByText('No client was found',{exact:true}).isVisible())throw new TargetBusinessError('NOT_FOUND','No member matches this external reference in the connected Mifos instance. Check the member’s External Id (not the generated client number). Local setup seeds 10001 and 10002. Create a member separately if needed, then prepare savings.');
       }
       if(tasks.get(page)==='member'){
         if(step.action==='click'&&value==='Create Client'){
@@ -354,7 +354,7 @@ export function createMifosProfile(options:MifosTargetOptions): TargetProfile {
     },
     async detectState(page){
       if(await page.locator('#login-form:visible').count())return {kind:'intervention',code:'SESSION_EXPIRED',message:'Sign in to the local Mifos session before returning control.'};
-      if(tasks.get(page)!=='member'&&await page.getByText('No client was found',{exact:true}).filter({visible:true}).count())return {kind:'business',code:'NOT_FOUND',message:'Mifos did not find a matching member.'};
+      if(tasks.get(page)!=='member'&&await page.getByText('No client was found',{exact:true}).filter({visible:true}).count())return {kind:'business',code:'NOT_FOUND',message:'No member matches this external reference in the connected Mifos instance. Check the member’s External Id; local setup seeds 10001 and 10002. Create a member separately if needed, then prepare savings.'};
       const errors=page.locator('mat-error:visible, .alert-danger:visible');
       const notices=page.locator('.alert-danger:visible, .mat-snack-bar-container:visible, .mat-mdc-snack-bar-container:visible, .toast-error:visible, [role="alert"]:visible');
       const noticeText=normalize((await notices.allInnerTexts()).join(' '));

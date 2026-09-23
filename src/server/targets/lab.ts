@@ -52,6 +52,17 @@ export function createLabProfile(baseUrl: string): TargetProfile {
       if (request.method() === 'POST' && (/^\/clients\/\d+\/applications\/review$/.test(url.pathname) || ['/restore-session', '/dismiss-notice'].includes(url.pathname))) return 'read';
       return 'deny';
     },
+    validateCommit(request, inputs, summary) {
+      try {
+        const url = new URL(request.url());
+        if (url.origin !== baseUrl || url.pathname !== '/applications' || url.search || request.method() !== 'POST') return false;
+        if (request.headers()['content-type']?.split(';')[0].trim() !== 'application/x-www-form-urlencoded') return false;
+        const body = new URLSearchParams(request.postData() || '');
+        const allowed = ['clientReference', 'product', 'externalReference', 'csrf', 'scenario'];
+        if ([...body.keys()].length !== allowed.length || allowed.some(key => body.getAll(key).length !== 1)) return false;
+        return (['clientReference', 'product', 'externalReference'] as const).every(key => body.get(key) === inputs[key] && summary[key] === inputs[key]);
+      } catch { return false; }
+    },
     parameterize(target, inputs, resolved) {
       if (target.value === `Open member ${inputs.clientReference}`) return { ...target, value: 'Open member {{clientReference}}' };
       if (target.value === `View account ${inputs.accountReference || resolved?.accountReference}`) return { ...target, value: 'View account {{accountReference}}' };

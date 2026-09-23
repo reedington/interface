@@ -87,7 +87,7 @@ function inputs(firstName:string,lastName:string):RunInputs{
   return {clientReference:String(randomInt(100_000_000_000,999_999_999_999)),firstName,lastName,accountReference:'',product:'Everyday Savings',externalReference:`MEMBER-DISC-${randomUUID().slice(0,12)}`};
 }
 async function create(input:RunInputs,mode:'discovery'|'replay',capabilityId?:string):Promise<Run>{
-  return request('/api/runs',{mode,task:'member',goal:`Create a new member with first name "${input.firstName}" and last name "${input.lastName}", member reference ${input.clientReference}, after my approval`,goalReviewed:true,...(mode==='discovery'?{provider:'openai'}:{}),capabilityId,inputs:input,idempotencyKey:randomUUID()});
+  return request('/api/runs',{mode,replayPurpose:'validation',task:'member',goal:`Create a new member with first name "${input.firstName}" and last name "${input.lastName}", member reference ${input.clientReference}, after my approval`,goalReviewed:true,...(mode==='discovery'?{provider:'openai'}:{}),capabilityId,inputs:input,idempotencyKey:randomUUID()});
 }
 function clientPosts(start:number){return targetRequests.slice(start).filter(request=>request.method==='POST'&&request.path.endsWith('/clients'));}
 function approval(run:Run,input:RunInputs,start:number){

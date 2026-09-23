@@ -56,6 +56,15 @@ export class Engine {
     if([...this.runs.values()].filter(r=>r.status!=='completed').length>=2)throw new ActionError('Two local sessions are active. Finish or stop one before starting another.');
     const cap=input.mode==='replay'?this.store.capability(input.capabilityId||this.profile.capabilities().find(c=>c.task===input.task)?.id||''):undefined;
     if(input.mode==='replay'&&(!cap||cap.status==='quarantined'||cap.target!==this.profile.id))throw new ActionError('Choose an available capability for the current application.');
+    let artifact:Capability|undefined;
+    if(cap){
+      const parsed=capabilitySchema.safeParse(cap);
+      if(!parsed.success||digest(parsed.data)!==cap.digest)throw new ActionError('The capability content does not match its recorded digest. Replay was blocked before opening a browser.');
+      if(cap.approvalReview&&cap.approvalReview.digest!==cap.digest)throw new ActionError('The capability differs from its approved review digest. Review this version again.');
+      if(cap.status==='approved'&&cap.provenance.kind==='discovered'&&!cap.approvalReview)throw new ActionError('This discovered capability has no approval review.');
+      if(cap.status==='draft'&&input.replayPurpose!=='validation')throw new ActionError('Draft capabilities require an explicit validation replay. Approve this version before execution.');
+      artifact=parsed.data;
+    }
     if(this.profile.id==='mifos-x'&&input.scenario!=='normal')throw new ActionError('Fault-injection scenarios are available in the explicit local lab, not the real Mifos application.',400);
     const task=cap?.task||input.task;
     try{validateTaskInputs(task,input.inputs);}catch{throw new ActionError('Required inputs for this operation are missing or invalid.',400);}
@@ -67,9 +76,10 @@ export class Engine {
     const config=input.mode==='discovery'?resolveProviderConfig(input.provider,input.model):undefined;
     const r:Run={id:randomUUID(),mode:input.mode,task,goal:input.goal||defaultGoals[task],capabilityId:cap?.id,capabilityDigest:cap?.digest,status:'queued',effect:'none',inputs:input.inputs,scenario:input.scenario,createdAt:now(),updatedAt:now(),sessionId:randomUUID(),owner:'automation',epoch:1,stepIndex:0,steps:cap?.steps.map(s=>({id:s.id,label:s.label,state:'pending'}))||[],events:[],frameRevision:0,viewport:{width:1120,height:760},provider:config?.provider,model:config?.model,modelCalls:0,...(config?{discoveryBudget:{...discoveryLimits,actions:0,activeMs:0,unchangedObservations:0,consecutiveWaits:0}}:{})};
     r.targetId=this.profile.id;
+    if(cap)r.replayPurpose=input.replayPurpose||'execution';
     this.runs.set(r.id,r);this.store.saveRun(r);this.store.saveRequest(input.idempotencyKey,r.id,hash);
     this.event(r,'created',`${input.mode==='replay'?'Deterministic replay':'Model discovery'} requested for synthetic records.`);
-    void this.start(r,cap,config).catch(error=>{if(!(error instanceof Halt))this.finish(r,'failed','START_FAILED',String(error.message||error));});
+    void this.start(r,artifact,config).catch(error=>{if(!(error instanceof Halt))this.finish(r,'failed','START_FAILED',String(error.message||error));});
     return r;
   }
   private async start(r:Run,capability?:Capability,config?:ProviderConfig) {
@@ -90,7 +100,9 @@ export class Engine {
       if(policy==='deny'||(policy==='authentication'&&!s.initializing&&r.owner!=='human')){this.event(r,'policy',`Blocked unregistered ${request.method()} action at ${url.pathname.slice(0,180)}.`);return route.abort('blockedbyclient');}
       if(policy==='commit') {
         if(!s.permitCommit||s.haltRequested||r.owner!=='automation'||r.status!=='running'){this.event(r,'policy','Blocked submission without an active single-use approval.');return route.abort('blockedbyclient');}
-        if(this.profile.validateCommit&&!this.profile.validateCommit(request,r.inputs,s.commitSummary||{})){s.permitCommit=false;this.event(r,'policy','Blocked submission that differs from the approved target request.');return route.abort('blockedbyclient');}
+        let valid=false;
+        try{valid=typeof this.profile.validateCommit==='function'&&this.profile.validateCommit(request,r.inputs,s.commitSummary||{});}catch{/* A broken validator must never permit a write. */}
+        if(!valid){s.permitCommit=false;this.event(r,'policy','Blocked submission that differs from the approved target request or lacks a working validator.');return route.abort('blockedbyclient');}
         s.permitCommit=false;
         // Durable intent precedes the external request. A crash after this point is ambiguous.
         r.effect='unknown';this.event(r,'commit_sent','Submission dispatched. Confirmation is still required.');
@@ -183,6 +195,7 @@ export class Engine {
     if(r.status==='completed')return;
     if(result==='succeeded')output=this.validatedOutput(r,output||r.output);
     r.status='completed';r.result=result;r.outcomeCode=outcomeCode;r.error=error;r.output=output||r.output;r.finishedAt=now();r.owner='none';r.epoch++;r.intervention=undefined;
+    for(const step of r.steps)if(step.state==='running'||step.state==='waiting')step.state=result==='succeeded'?'verified':'failed';
     if(r.capabilityId){const cap=this.store.capability(r.capabilityId);if(cap){cap.replayCount++;if(result==='succeeded')cap.successCount++;this.store.saveCapability(cap);}}
     this.event(r,'finished',error||`Run finished: ${outcomeCode}.`);
     const s=this.sessions.get(r.id);if(s)void this.capture(s).catch(()=>{});

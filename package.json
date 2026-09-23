@@ -24,6 +24,7 @@
     "mifos:logs": "node scripts/mifos-stack.mjs logs",
     "mifos:seed": "node scripts/mifos-seed.mjs",
     "test:mifos": "node --import tsx tests/mifos-e2e.ts",
+    "test:mifos:prepare": "node --import tsx tests/mifos-prepare-e2e.ts",
     "test:member": "node --import tsx tests/member-e2e.ts",
     "test:member:discovery": "node --import tsx tests/member-discovery.ts",
     "export:evidence": "node --import tsx scripts/export-evidence.ts",

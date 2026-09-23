@@ -29,7 +29,8 @@ export interface TargetProfile {
   detectState(page: Page): Promise<TargetState | undefined>;
   isCommitTarget(page: Page, locator: Locator): Promise<boolean>;
   networkPolicy(request: Request): 'read' | 'authentication' | 'commit' | 'deny';
-  validateCommit?(request: Request, inputs: RunInputs, summary: Record<string, string>): boolean;
+  /** Mandatory, fail-closed validation of every request classified as a commit. */
+  validateCommit(request: Request, inputs: RunInputs, summary: Record<string, string>): boolean;
   parameterize(target: TargetLocator, inputs: RunInputs, resolvedInputs?: Partial<RunInputs>): TargetLocator;
   capabilities(): CapabilityRecord[];
   resolveAccount?(page: Page, inputs: RunInputs): Promise<string>;

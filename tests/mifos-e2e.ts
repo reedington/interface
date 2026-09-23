@@ -89,7 +89,7 @@ async function request(path:string,body?:unknown,expected=200){
   assert.equal(response.status,expected,JSON.stringify(result));return result;
 }
 async function create(task:TaskKind,member='10001',product='Everyday Savings',accountReference='',mode='replay',capabilityId?:string):Promise<Run>{
-  return request('/api/runs',{mode,task,capabilityId,provider:'openai',inputs:{clientReference:member,accountReference,product,externalReference:`QA-${randomUUID().slice(0,12)}`},idempotencyKey:randomUUID()});
+  return request('/api/runs',{mode,replayPurpose:'validation',task,capabilityId,provider:'openai',inputs:{clientReference:member,accountReference,product,externalReference:`QA-${randomUUID().slice(0,12)}`},idempotencyKey:randomUUID()});
 }
 async function wait(id:string,timeout=90_000):Promise<Run>{
   const deadline=Date.now()+timeout;
@@ -102,13 +102,13 @@ try{
   const state=await request('/api/state');assert.equal(state.target.id,'mifos-x');assert.ok(state.capabilities.every((c:{target:string})=>c.target==='mifos-x'));
   target=state.target;await saveProgress('running');
   if(options.baseline){
-  await request('/api/runs',{mode:'replay',capabilityId:'lab-balance-us-v1',idempotencyKey:randomUUID()},409);
+  await request('/api/runs',{mode:'replay',replayPurpose:'validation',capabilityId:'lab-balance-us-v1',idempotencyKey:randomUUID()},409);
   await request('/api/runs',{scenario:'session_expired',idempotencyKey:randomUUID()},400);
   await pass('Workbench exposes Mifos capabilities and refuses lab contracts and injected lab scenarios');
   for(const fixture of fixtures.clients){
     const goal=`Look up member ${fixture.clientReference} and read their current savings balance for account ${fixture.accountReference}`;
     const plan=await request('/api/goals/resolve',{goal});assert.equal(plan.capabilityId,'mifos-balance-v1');
-    const run=await wait((await request('/api/runs',{mode:'replay',goal,goalReviewed:true,task:plan.task,capabilityId:plan.capabilityId,inputs:plan.inputs,idempotencyKey:randomUUID()})).id);
+    const run=await wait((await request('/api/runs',{mode:'replay',replayPurpose:'validation',goal,goalReviewed:true,task:plan.task,capabilityId:plan.capabilityId,inputs:plan.inputs,idempotencyKey:randomUUID()})).id);
     success(run);assert.equal(run.output?.currency,'USD');assert.equal(run.output?.accountReference,fixture.accountReference);assert.equal(run.output?.balance,fixture.initialBalance);
     await pass(`Visible Mifos UI verifies ${fixture.clientReference} / ${fixture.accountReference} USD balance with zero model calls`,run);
   }

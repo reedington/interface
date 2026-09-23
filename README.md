@@ -172,3 +172,9 @@ Later work: compile human repair into reusable contracts; strengthen artifact pr
 - **Model key rejected:** update the key in Settings or `.env`, then start a new discovery run. No key is needed for deterministic replay of qualified capabilities.
 
 See [local architecture](docs/local-architecture.md), [the original system design](plans/system-design.md), and the supplied assignment, “Assignment A — Computer-Use Automation System.” The private assignment PDF is not part of the public source bundle.
+
+### Replay admission and member references
+
+The worker parses and verifies a capability's content digest before creating a browser session. A saved approval review must name that exact digest. API callers must send `replayPurpose: "validation"` to run a draft; omitted purpose means execution and requires an approved capability. The workbench selects validation explicitly for drafts. Validation still requires separate, exact-preview approval for every business write; it does not authorize unattended submission.
+
+Member inputs use Mifos **External Id**, not its generated client/account number. The default local setup creates member references `10001` and `10002`. For example: “Prepare a new Everyday Savings sub-account for member 10001 and stop at review.” A missing member returns `NOT_FOUND` without creating anything. Create a member as a separate reviewed operation first if needed.
