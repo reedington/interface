@@ -4,6 +4,8 @@
 
 A macOS desktop application for model-guided UI discovery, deterministic browser replay, reviewed submission, and live human intervention. The workbench and Chromium browser run on your laptop. The default integration target is the **Mifos X web app, backed by Apache Fineract**, running locally in Docker. No AWS account, cloud deployment, or separate virtual desktop is needed.
 
+The live Chromium panel displays the actual browser pointer moving between controls, with a pulse on clicks. During takeover, your normal mouse pointer remains available. Pointer telemetry is transient and does not alter target-page content or recorded capability selectors.
+
 The existing **Local Credit Union Lab** remains an explicitly selected synthetic fixture for offline development and fault testing. It is a separate target; its passing tests are not evidence that a Mifos workflow has been qualified. See [the validation record](docs/validation.md) for the tested scope.
 
 Start with [REPORT.md](REPORT.md) for the design decisions and [evidence/](evidence/README.md) for the genuine discovered artifact, zero-model replay and duplicate-reference outcome. See [the assessment-readiness checklist](docs/readiness.md) for remaining handover work and [brand assets](public/brand/README.md) for the Interface identity.

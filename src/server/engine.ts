@@ -1,3 +1,4 @@
+import { trackCursor, moveToControl, type CursorState } from './cursor.js';
 import { randomUUID } from 'node:crypto';
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -27,6 +28,7 @@ interface Session {
   pendingProposal?:AbortController;pendingStep?:CapabilityStep;
   discoveryStepStarted?:number;lastObservationHash?:string;
   initializing?:boolean;commitSummary?:Record<string,string>;
+  cursor?:CursorState;
   frame?:{dataUrl:string;revision:number;at:string;width:number;height:number;hash:string};
 }
 export class Engine {
@@ -79,6 +81,7 @@ export class Engine {
     const context=await this.browser.newContext({viewport:r.viewport,acceptDownloads:false,serviceWorkers:'block',locale:'en-US',timezoneId:'America/New_York'});
     const page=await context.newPage();page.setDefaultTimeout(6000);page.setDefaultNavigationTimeout(12000);
     const s:Session={run:r,page,context,capability,config,lock:Promise.resolve(),driving:false,haltRequested:false,permitCommit:false,commands:new Set(),recorded:[{id:'open',label:'Open the banking application',action:'navigate',path:this.profile.entryPath,effect:'read'}],history:[],assisted:false};
+    s.cursor=await trackCursor(page);
     this.sessions.set(r.id,s);
     await context.route('**/*',async route=>{
       const request=route.request();let url:URL;try{url=new URL(request.url());}catch{return route.abort();}
@@ -222,10 +225,11 @@ export class Engine {
     if(r.mode==='discovery'&&!this.discoveryGuard(s,'action'))throw new Halt();
     const value=step.value?.source==='input'?({...r.inputs,...r.resolvedInputs})[step.value.key]:step.value?.value;
     try {
+      if(['click','fill','select'].includes(step.action)){await this.capture(s,false);await moveToControl(s.page,loc,s.cursor,()=>this.assertAutomation(s));}
       if(commit)s.permitCommit=true;
       if(step.action==='click')await loc.click();
       else if(step.action==='fill'){if(value===undefined)throw new Error('Missing fill value.');await loc.fill(value);}
-      else if(step.action==='select'){if(value===undefined)throw new Error('Missing select value.');if(await loc.evaluate(el=>el.tagName.toLowerCase()==='select'))await loc.selectOption({label:value});else {await loc.click();this.assertAutomation(s);const option=s.page.getByRole('option',{name:value,exact:true});await option.waitFor({state:'visible'});if(await option.count()!==1)throw new Error('The requested option is not unique.');this.assertAutomation(s);await option.click();}}
+      else if(step.action==='select'){if(value===undefined)throw new Error('Missing select value.');if(await loc.evaluate(el=>el.tagName.toLowerCase()==='select'))await loc.selectOption({label:value});else {await loc.click();this.assertAutomation(s);const option=s.page.getByRole('option',{name:value,exact:true});await option.waitFor({state:'visible'});if(await option.count()!==1)throw new Error('The requested option is not unique.');this.assertAutomation(s);await moveToControl(s.page,option,s.cursor,()=>this.assertAutomation(s));await option.click();}}
       else if(step.action==='press'){if(!['Enter','Tab','Shift+Tab','Escape','ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Space'].includes(value||''))throw new Error('Unsupported key.');await loc.press(value!);}
       await s.page.waitForLoadState('domcontentloaded');
     } finally {s.permitCommit=false;}
@@ -463,12 +467,13 @@ export class Engine {
       r.frameRevision++;s.frame=undefined;await this.capture(s);return r;
     });
   }
-  private async capture(s:Session) {
+  private async capture(s:Session,persistEvidence=true) {
     if(s.page.isClosed())return;
     try {
       const bytes=await s.page.screenshot({type:'jpeg',quality:70,animations:'disabled',timeout:4000});
       const hash=digest(bytes.toString('base64'));if(hash!==s.frame?.hash)s.run.frameRevision++;
       s.run.frameAt=now();s.frame={dataUrl:`data:image/jpeg;base64,${bytes.toString('base64')}`,revision:s.run.frameRevision,at:s.run.frameAt,width:s.run.viewport.width,height:s.run.viewport.height,hash};
+      if(!persistEvidence)return;
       const folder=join(this.store.dataPath,'evidence');mkdirSync(folder,{recursive:true,mode:0o700});
       // The raw frame is transient and only served to the local operator. Never
       // write it as evidence: persistent images retain geometry, not page text.
@@ -477,6 +482,7 @@ export class Engine {
       writeFileSync(join(folder,`${s.run.id}.json`),JSON.stringify({policy:'geometry-only-v1',outcomeCode:s.run.outcomeCode,intervention:s.run.intervention?.code,stepIndex:s.run.stepIndex,structure:await evidenceStructure(s.page)}),{mode:0o600});
     }catch{/* A missing frame is an observation failure, never proof of a business failure. */}
   }
+  cursor(id:string){this.get(id);return {cursor:this.sessions.get(id)?.cursor||null};}
   async frame(id:string) {
     const s=this.sessions.get(id);
     if(!s){const r=this.get(id),path=join(this.store.dataPath,'evidence',`${r.id}.jpg`);let encoded:string;
@@ -484,7 +490,7 @@ export class Engine {
       else if(existsSync(`${path}.private`))encoded=openPrivate(readFileSync(`${path}.private`,'utf8'),readStateKey(this.store.dataPath),`legacy-frame:${r.id}.jpg`);
       else throw new ActionError('No saved frame is available.',404);
       return {dataUrl:`data:image/jpeg;base64,${encoded}`,revision:r.frameRevision,at:r.frameAt||r.updatedAt,width:r.viewport.width,height:r.viewport.height};}
-    if(!s.frame||Date.now()-Date.parse(s.frame.at)>800)await this.serial(s,()=>this.capture(s));
+    if(!s.frame||(!s.driving&&Date.now()-Date.parse(s.frame.at)>800))await this.serial(s,()=>this.capture(s));
     if(!s.frame)throw new ActionError('The browser has not produced a frame yet.',503);
     const {hash,...frame}=s.frame;return frame;
   }

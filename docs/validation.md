@@ -148,3 +148,10 @@ The [included live member evidence](../evidence/member-discovery/manifest.json) 
 [Fresh setup evidence](../evidence/fresh-setup.json) identifies its exact source snapshot. A clean source copy passed dependency installation, typecheck, build and setup against initially empty, isolated database volumes. First seeding made 12 writes; repeated setup made zero. Cached downloads and already installed host prerequisites were reused. Later source edits are outside that snapshot and covered by the final checks above.
 
 The running user workbench was not restarted because it retained two waiting sessions. The built version is available on the next launch. Public repository publication and submission have not occurred.
+
+
+## Visible Chromium pointer — 23 September 2026
+
+The live workbench now renders trusted Chromium mouse positions and click feedback over the screenshot, without adding a cursor element to the target DOM or model observations. Automation moves the actual browser pointer through intermediate positions before locator-based actions; ownership is checked between movement steps. Cursor telemetry is transient. Frame polling can read the latest cached image while an automated action is running instead of waiting behind that action's lock. The image wrapper keeps coordinates aligned at different display sizes, and reduced-motion settings disable visual interpolation.
+
+All **132 automated tests** pass, with typecheck and build passing. A separate actual workbench UI check observed ten rendered pointer positions and click feedback during a successfully verified synthetic balance lookup. Focused tests verify trusted-event tracking, rejection of synthetic pointer events, navigation reset and interruption on ownership loss. The idle local desktop was restarted with this update; no active run was interrupted.

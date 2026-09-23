@@ -23,3 +23,12 @@
 @media(max-width:1000px){.inspector>.intervention-card,.inspector>.result-card{grid-column:1/-1}}
 @media(max-width:760px){.session-approval-notice{flex-wrap:wrap}.session-approval-notice>.button{margin-left:auto}.session-approval-notice>div{flex-basis:calc(100% - 40px)}}
 .account-selection-card{scroll-margin-top:20px;border-color:#c9d8bf;background:#fbfdf8}.account-selection-card .intervention-title,.account-selection-card .intervention-title h2{color:#425f39}.account-selection-card>p{color:#5b6f51}.account-selection-card fieldset{border:0;padding:0;margin:17px 0;min-width:0}.account-selection-card legend{font-size:10px;line-height:1.6;color:#556d49;margin-bottom:9px}.account-choice{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid #d9e3d0;border-radius:6px;margin:8px 0;background:#fff;cursor:pointer}.account-choice.selected{border-color:#5f7e50;background:#edf5e6;box-shadow:0 0 0 1px #5f7e50}.account-choice:focus-within{outline:2px solid #466b37;outline-offset:3px}.account-choice>input{appearance:auto;width:16px;height:16px;min-height:0;flex-shrink:0;margin:2px 0 0;padding:0;accent-color:#41613b}.account-choice>span{display:flex;flex-direction:column;gap:5px;min-width:0;line-height:1.55}.account-choice strong{font-size:12px;color:#304c29;overflow-wrap:anywhere}.account-choice span>span{font-size:11px;color:#49663c}.account-choice small{font-size:10px;color:#5f7255}.account-selection-card form>.button{width:100%;white-space:normal;line-height:1.5}.result-message{font-size:11px;line-height:1.8;color:#5d6d53;margin-top:12px}
+
+.browser-cursor{position:absolute;z-index:3;pointer-events:none;transform:translate(-2px,-2px);transition:left 100ms linear,top 100ms linear;filter:drop-shadow(0 1px 2px #0005)}
+.browser-cursor.pressed svg{transform:scale(.88);transform-origin:2px 2px}
+.browser-click-ring{position:absolute;left:2px;top:2px;width:28px;height:28px;border:2px solid #51785b;border-radius:50%;pointer-events:none;animation:browser-click .55s ease-out forwards}
+@keyframes browser-click{from{transform:translate(-50%,-50%) scale(.25);opacity:1}to{transform:translate(-50%,-50%) scale(1.6);opacity:0}}
+@media(prefers-reduced-motion:reduce){.browser-cursor{transition:none}.browser-click-ring{animation-duration:.01ms}}
+
+.session-frame{position:relative;width:100%}
+.session-viewport img.interactive-frame{cursor:default}

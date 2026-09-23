@@ -151,7 +151,7 @@ export function App() {
       } catch (problem) { if (!cancelled) setFrameError((problem as Error).message); }
       finally { busy = false; }
     };
-    void poll(); const timer = setInterval(() => void poll(), 1000);
+    void poll(); const timer = setInterval(() => void poll(), 250);
     return () => { cancelled = true; clearInterval(timer); };
   }, [selectedId, view]);
   useEffect(() => { if (!notice) return; const timer = setTimeout(() => setNotice(''), 6500); return () => clearTimeout(timer); }, [notice]);
@@ -389,6 +389,15 @@ function Session({ run, frame, frameError, now, connected, pending, targetUrl, o
   onControl: (action: string) => Promise<void>; onInput: (input: Omit<HumanInput, 'epoch' | 'frameRevision' | 'commandId'>) => Promise<void>;
 }) {
   const [text, setText] = useState(''); const [key, setKey] = useState('Enter');
+  const [cursor,setCursor]=useState<{x:number;y:number;visible:boolean;pressed:boolean;clickSequence:number}|null>(null);
+  useEffect(()=>{
+    setCursor(null);if(!run?.id||run.status==='completed')return;
+    let cancelled=false,busy=false;
+    const poll=async()=>{if(busy)return;busy=true;try{const state=await api<{cursor:typeof cursor}>(`/api/runs/${run.id}/cursor`);if(!cancelled)setCursor(state.cursor);}catch{if(!cancelled)setCursor(null);}finally{busy=false;}};
+    void poll();const timer=setInterval(()=>void poll(),100);
+    return()=>{cancelled=true;clearInterval(timer);};
+  },[run?.id,run?.status]);
+
   const human = run?.status === 'human_control' && run.owner === 'human';
   const stale = !connected || (!!frame && now - Date.parse(frame.at) > 3000);
   const canInput = human && !!frame && !stale && !pending;
@@ -403,14 +412,15 @@ function Session({ run, frame, frameError, now, connected, pending, targetUrl, o
     {run?.status==='awaiting_human'&&run.intervention?.accountSelection&&<div className="session-approval-notice" role="status"><Hand size={18}/><div><strong>Choose a savings account</strong><p>The member has several matching accounts. Select one to continue the balance lookup.</p></div><a className="button small" href="#run-account-selection">Choose account<ArrowRight size={14}/></a></div>}
     <div className="browser-bar"><div className="window-dots"><i /><i /><i /></div><div className="browser-address"><ShieldCheck size={12} /><span>{targetUrl.replace(/^https?:\/\//, '')}</span></div><a className="icon-button" href={targetUrl} target="_blank" rel="noreferrer" aria-label="Open the separate local target application" title="Open application separately; this does not take over the run session"><ExternalLink size={14} /></a></div>
     <div className="session-viewport">
-      {run && frame?.dataUrl ? <>
+      {run && frame?.dataUrl ? <div className="session-frame">
         <img className={human ? 'interactive-frame' : ''} src={frame.dataUrl} alt={`Live ${human ? 'human-controlled' : 'automation'} session for ${TASKS[run.task].short}`} draggable={false} onClick={(event) => {
           if (!canInput) return;
           const rect = event.currentTarget.getBoundingClientRect();
           void onInput({ action: 'click', x: Math.round((event.clientX - rect.left) * frame.width / rect.width), y: Math.round((event.clientY - rect.top) * frame.height / rect.height) });
         }} />
+        {!human&&!stale&&cursor?.visible&&<div className={`browser-cursor ${cursor.pressed?'pressed':''}`} aria-hidden="true" style={{left:`${cursor.x/frame.width*100}%`,top:`${cursor.y/frame.height*100}%`}}><svg width="24" height="30" viewBox="0 0 24 30"><path d="M2 2V24L8 18L13 28L18 25L13 16H22Z" fill="#244d3b" stroke="white" strokeWidth="2" strokeLinejoin="round"/></svg>{cursor.clickSequence>0&&<span key={cursor.clickSequence} className="browser-click-ring"/>}</div>}
         {stale && <div className="stale-frame"><WifiOff size={15} />{connected ? 'Waiting for a fresh frame · input paused' : 'Connection lost · last received frame'}</div>}
-      </> : <div className="session-placeholder"><div className="placeholder-monitor"><Monitor size={38} strokeWidth={1.3} /><span /></div><h3>{run ? 'Opening the live session' : 'Your local browser session appears here.'}</h3><p>{run ? (frameError || 'This is the worker’s Chromium browser on your computer, not a cloud desktop.') : 'Describe a goal above to watch a local Chromium browser operate the credit union application.'}</p><span className="placeholder-label"><span />{run ? 'WAITING FOR FRAME' : 'SESSION READY ON START'}</span></div>}
+      </div> : <div className="session-placeholder"><div className="placeholder-monitor"><Monitor size={38} strokeWidth={1.3} /><span /></div><h3>{run ? 'Opening the live session' : 'Your local browser session appears here.'}</h3><p>{run ? (frameError || 'This is the worker’s Chromium browser on your computer, not a cloud desktop.') : 'Describe a goal above to watch a local Chromium browser operate the credit union application.'}</p><span className="placeholder-label"><span />{run ? 'WAITING FOR FRAME' : 'SESSION READY ON START'}</span></div>}
     </div>
     <div className="session-statusbar"><span className="owner-label">{human ? <Hand size={13} /> : <MousePointer2 size={13} />}{run ? human ? 'You control this session' : run.owner === 'automation' ? 'Automation has control' : 'No active controller' : 'No active session'}</span><span className="frame-label">{frame ? `${stale ? 'Stale' : 'Live'} · ${age < 1 ? 'just now' : `${age}s ago`}` : 'No frame'}{frame && <span className="mono">#{frame.revision}</span>}</span></div>
     {run && <div className="session-controls"><div className="control-buttons">{!human && run.status !== 'completed' && <><button className="button small" disabled={!!pending || !connected || run.status !== 'running'} onClick={() => void onControl('pause')}>{pending === 'pause' ? <Spinner /> : <Pause size={14} />}{pending === 'pause' || run.status === 'pausing' ? 'Pausing…' : 'Pause'}</button><button className="button small" disabled={!!pending || !connected || run.status === 'pausing'} onClick={() => void onControl('takeover')}>{pending === 'takeover' ? <Spinner /> : <Hand size={14} />}Take control</button></>}{human && <button className="button small primary" disabled={!!pending || !connected} onClick={() => void onControl('resume')}>{pending === 'resume' ? <Spinner /> : <Play size={14} />}Return to automation</button>}{run.status === 'awaiting_human' && !run.intervention?.accountSelection && <button className="button small" disabled={!!pending || !connected} onClick={() => void onControl('resume')}><RefreshCw size={14} />Validate & resume</button>}{run.status !== 'completed' && <button className="button small danger-quiet" disabled={!!pending || !connected} onClick={() => void onControl('stop')}>{pending === 'stop' ? <Spinner /> : <Square size={13} />}Stop</button>}</div><span className="control-hint">{run.status === 'completed' ? 'Session record retained' : pending && pending !== 'input' ? 'Waiting for worker acknowledgement' : human ? 'Click the screen or use the controls below' : 'Control changes require worker acknowledgement'}</span></div>}

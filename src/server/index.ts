@@ -72,6 +72,7 @@ export async function startWorkbench(options:{port?:number;targetPort?:number;da
   app.post('/api/runs',async req=>engine.create(createRunSchema.parse(req.body)));
   app.get<{Params:{id:string}}>('/api/runs/:id',async req=>engine.get(req.params.id));
   app.get<{Params:{id:string}}>('/api/runs/:id/audit',async(req,reply)=>{const run=engine.get(req.params.id);reply.header('Content-Disposition',`attachment; filename="${encodeURIComponent(run.id)}-audit.json"`);return redactRun(run);});
+  app.get<{Params:{id:string}}>('/api/runs/:id/cursor',async req=>engine.cursor(req.params.id));
   app.get<{Params:{id:string}}>('/api/runs/:id/frame',async req=>engine.frame(req.params.id));
   app.post<{Params:{id:string}}>('/api/runs/:id/select-account',async req=>engine.selectAccount(req.params.id,z.object({epoch:z.number().int().positive(),accountReference:z.string().regex(/^[A-Za-z0-9-]{3,32}$/)}).strict().parse(req.body)));
   for(const action of ['pause','takeover','resume','stop','approve','reconcile'])app.post<{Params:{id:string};Body:{epoch?:number;approvalId?:string}}>(`/api/runs/:id/${action}`,async req=>engine.control(req.params.id,action,req.body||{}));
