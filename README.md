@@ -4,6 +4,22 @@
 
 A macOS desktop application for model-guided UI discovery, deterministic browser replay, reviewed submission, and live human intervention. The workbench and Chromium browser run on your laptop. The default integration target is the **Mifos X web app, backed by Apache Fineract**, running locally in Docker. No AWS account, cloud deployment, or separate virtual desktop is needed.
 
+## Watch the walkthrough
+
+**See discovery, approval, and replay in a 76-second walkthrough.**
+
+[![Watch the Interface walkthrough: the live Mifos application pauses for exact-preview approval, with the presenter explaining the flow.](docs/media/walkthrough-preview.jpg)](docs/media/interface-walkthrough.mp4)
+
+**[▶ Watch the narrated walkthrough · 1:16](docs/media/interface-walkthrough.mp4)** &nbsp; · &nbsp; 1080p &nbsp; · &nbsp; Sound on
+
+Follow a savings application through **live discovery**, **submission approval**, **saved-capability review**, and **replay for another member with zero model calls**. A separate preparation run demonstrates taking control and returning the browser to automation.
+
+<sub>Recorded against local Mifos X with fictional data. Waiting is shortened for the demo. Submitted savings applications remain pending approval in Mifos.</sub>
+
+[Set up locally](#set-up-a-fresh-checkout) · [Read the design report](REPORT.md) · [Inspect the evidence](evidence/README.md)
+
+## About the workbench
+
 The live Chromium panel displays the actual browser pointer moving between controls, with a pulse on clicks. During takeover, your normal mouse pointer remains available. Pointer telemetry is transient and does not alter target-page content or recorded capability selectors.
 
 The existing **Local Credit Union Lab** remains an explicitly selected synthetic fixture for offline development and fault testing. It is a separate target; its passing tests are not evidence that a Mifos workflow has been qualified. See [the validation record](docs/validation.md) for the tested scope.
